@@ -1,13 +1,27 @@
 // Backend entry point
 
-import express from 'express';
-const app = express()
-const port = 3000
+import app from './app';
+import dotenv from "dotenv";
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const start = async () => {
+    try {
+        dotenv.config({ path: '../.env' }); //load the global .env at root directory
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+        console.log('Starting application...');
+
+        // Load environment variables
+        const port = process.env.SERVER_PORT || 3000;
+    
+        // Connect to PostgreSQL
+    
+        // Start server
+        app.listen(port, () => {
+            console.log(`app listening on port ${port}`)
+        })
+    } catch(err) {
+        console.error("Error starting the server:", err);
+        process.exit(1);
+    }
+}
+
+start();

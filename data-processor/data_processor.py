@@ -45,7 +45,7 @@ def parse_and_add_data(path, cursor):
                         except Exception as e:
                             print(f"Error occurred when processing section {section}: {str(e)}")
 def main():
-    load_dotenv()
+    load_dotenv(dotenv_path='../.env')
     path = "archives/ubc-pair-2016.zip"
     db_conn = psycopg2.connect(
         database=os.getenv('PGDATABASE'), 
@@ -53,6 +53,7 @@ def main():
         password=os.getenv('PGPASSWORD'), 
         host=os.getenv('PGHOST')
         )
+    # print(os.getenv('PGDATABASE'))
     cursor = db_conn.cursor()
     empty_table(cursor)
     parse_and_add_data(path, cursor)
