@@ -2,12 +2,12 @@
     "extends": "@tsconfig/node18/tsconfig.json",
     "compilerOptions": {
       "target": "ES6",
-    //   "module": "commonjs",
+      // "module": "commonjs",
       "esModuleInterop": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
       "outDir": "./dist",
-      "rootDir": "./src",
+      "rootDir": "./",
       "noImplicitAny": true,
       "removeComments": true,
       "preserveConstEnums": true,
@@ -21,7 +21,7 @@
       "test/**/*.ts",
     ],
     "exclude": [
-      "node_modules"
+      "node_modules"    
     ]
   }
   
