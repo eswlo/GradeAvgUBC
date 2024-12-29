@@ -3,7 +3,7 @@ CREATE DATABASE gradeavgubc;
 CREATE TABLE sections(
     psqlidx BIGSERIAL NOT NULL,
     uuid TEXT NOT NULL,
-	id TEXT NOT NULL,
+	id INT NOT NULL,
 	title TEXT NOT NULL,
 	instructor TEXT NOT NULL,
 	dept TEXT NOT NULL,

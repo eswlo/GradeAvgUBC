@@ -6,9 +6,9 @@ from dotenv import load_dotenv
 
 def insert_section(section, cursor):
     try:
-        section_year = 1900 if section["Section"] == "overall" else int(section["Year"])
+        section_year = os.getenv("PGOVERALL_YEAR") if section["Section"] == "overall" else int(section["Year"])
         values_to_insert = [
-            section["id"], section["Course"], section["Title"], section["Professor"], section["Subject"], 
+            section["id"], int(section["Course"]), section["Title"], section["Professor"], section["Subject"], 
             section_year, section["Avg"], section["Pass"], section["Fail"], section["Audit"]
         ]     
         table_name = os.getenv("PGTABLE_SECTIONS")
@@ -17,6 +17,32 @@ def insert_section(section, cursor):
                        """, tuple(values_to_insert))
     except Exception as e:
         print(f"Error occurred when inserting section {section}: {str(e)}")
+
+def create_table(cursor): 
+    table_name = os.getenv("PGTABLE_SECTIONS")
+    drop_query = f"DROP TABLE IF EXISTS {table_name};"
+    create_query = """
+        CREATE TABLE sections(
+            psqlidx BIGSERIAL NOT NULL,
+            uuid TEXT NOT NULL,
+            id INT NOT NULL,
+            title TEXT NOT NULL,
+            instructor TEXT NOT NULL,
+            dept TEXT NOT NULL,
+            year INT NOT NULL,
+            avg NUMERIC(5,2) NOT NULL,
+            pass INT NOT NULL,
+            fail INT NOT NULL,
+            audit INT NOT NULL
+        );
+    """
+    cursor.execute(drop_query)
+    try:
+        cursor.execute(create_query)
+    except Exception as e:
+        print(f"Error occurred when creating table {table_name}: {str(e)}")
+
+
 
 def empty_table(cursor):
     try:
@@ -55,7 +81,7 @@ def main():
         )
     # print(os.getenv('PGDATABASE'))
     cursor = db_conn.cursor()
-    empty_table(cursor)
+    create_table(cursor)
     parse_and_add_data(path, cursor)
     db_conn.commit()
     cursor.close()
