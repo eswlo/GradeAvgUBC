@@ -3,7 +3,7 @@
 import app from "./app";
 import dotenv from "dotenv";
 
-const start = async () => {
+export const start = () => {
   try {
     dotenv.config({ path: "../.env" }); //load the global .env at root directory
 
@@ -12,12 +12,11 @@ const start = async () => {
     // Load environment variables
     const port = process.env.SERVER_PORT || 3000;
 
-    // Connect to PostgreSQL
-
     // Start server
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
       console.log(`app listening on port ${port}`);
     });
+    return server;
   } catch (err) {
     console.error("Error starting the server:", err);
     process.exit(1);

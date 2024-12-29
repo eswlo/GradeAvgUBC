@@ -2,15 +2,18 @@
     "extends": "@tsconfig/node18/tsconfig.json",
     "compilerOptions": {
       "target": "ES6",
-      // "module": "commonjs",
+      "module": "commonJS",
+      "moduleResolution": "node",             // Use Node.js resolution strategy (useful for `import`/`require`)
+      "resolveJsonModule": true,              // Allows importing `.json` files as modules
       "esModuleInterop": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
+      // "rootDir": "./src",
       "outDir": "./dist",
-      "rootDir": "./",
       "noImplicitAny": true,
       "removeComments": true,
       "preserveConstEnums": true,
+      // "allowImportingTsExtensions": true,
       "sourceMap": true,
       "typeRoots": [
         "./node_modules/@types"
@@ -18,10 +21,11 @@
     },
     "include": [
       "src/**/*.ts",
-      "test/**/*.ts",
+      "test/**/*.ts"   
     ],
     "exclude": [
-      "node_modules"    
+      "node_modules",
+      "dist"    
     ]
   }
   
