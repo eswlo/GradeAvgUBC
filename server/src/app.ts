@@ -1,23 +1,18 @@
 // Express app
-import express from 'express';
+import express, { Application } from "express";
 import cors from "cors";
-import { StatusCodes } from "http-status-codes";
-import { pool } from "./db"
+import * as QueryController from "./controllers/query";
+import dotenv from "dotenv";
 
-const app = express();
+
+dotenv.config({ path: '../.env' }); //load the global .env at root directory
+const app: Application = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-app.get('/api/v1/courses', async (req, res) => {
-    try {
-        const result = await pool.query("SELECT * from sections");
-        const resultLength = result.rowCount;
-        res.status(StatusCodes.OK).json({ resultLength });
-    } catch(err) {
-        console.log("Error occurred during pool query:", {err});
-    }
-})
+// Api endpoints
+app.post('/api/v1/query/average', QueryController.getAvg);
 
 export default app;
