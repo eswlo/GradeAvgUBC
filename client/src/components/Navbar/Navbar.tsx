@@ -8,7 +8,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const [courseLevel, setCourseLevel] = useState<string>("");
+  const [courseLevelList, setCourseLevelList] = useState<string[]>([]);
   const [yearStart, setYearStart] = useState<string>("");
   const [yearEnd, setYearEnd] = useState<string>("");
   const [avgLowerBound, setAvgLowerBound] = useState<string>("");
@@ -18,7 +18,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     if (event.target) {
-      setCourseLevel(event.target.value);
+        const newList: string[] = [event.target.value];
+      setCourseLevelList(newList);
     }
   };
 
@@ -27,7 +28,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       <select
         className={styles.levelDropdownMenu}
         id="levelDropdownMenu"
-        value={courseLevel}
+        value={courseLevelList}
         onChange={handleSetCourseLevel}
         name="levelDropdownMenu"
       >
@@ -117,7 +118,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const handleSubmit = () => {
     /*
 when processing query before submitting, check:
-depts and course level are selected and not empty;
+depts and course levels are selected and not empty; convert courselevelList to number[]
 avg: check if empty string; convert to number to check if lowerbound <= higher bound.
 if not, give warning and reset avgLowerBound and higher bound
       if (checkBoundCond()) {
@@ -127,7 +128,7 @@ if not, give warning and reset avgLowerBound and higher bound
           text: "Invalid input bound, please re-enter!",
         });
 
-year: check if year start <= year end
+years: convert to number and check if year start <= year end
 */
   };
 
