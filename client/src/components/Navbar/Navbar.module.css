@@ -1,0 +1,16 @@
+.navbar {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #002145, #425467);
+    width: 100vw;
+    min-height: 120px;
+    z-index: 1000; /* Ensure navbar stays on top */
+}
+
+.textContainer {
+    color: #fff;
+    margin-left: 50px;
+    padding: 20px 0px;
+}

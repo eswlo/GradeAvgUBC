@@ -1,0 +1,5 @@
+.appContainer {
+    display: flex;
+    flex-direction: column; /* Stacks the children vertically */
+    height: 100vh; /* Full viewport height */
+  }
