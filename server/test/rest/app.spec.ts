@@ -100,7 +100,7 @@ describe("Test backend server api", () => {
 
   it("POST test for an invalid query", async function () {
     return request(SERVER_URL)
-      .post(`/api/v1/grades/average`)
+      .post(`/api/v1/grades/averages`)
       .send(INVALID_QUERY)
       .set("Content-Type", "application/json")
       .then(function (res: Response) {
@@ -116,7 +116,7 @@ describe("Test backend server api", () => {
 
   it("POST test for a valid query", async function () {
     return request(SERVER_URL)
-      .post(`/api/v1/grades/average`)
+      .post(`/api/v1/grades/averages`)
       .send(VALID_QUERY)
       .set("Content-Type", "application/json")
       .then(function (res: Response) {

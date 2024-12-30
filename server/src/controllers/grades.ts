@@ -13,7 +13,18 @@ export async function getDepts(req: Request, res: Response): Promise<void> {
   }
 }
 
-export async function getAvg(req: Request, res: Response): Promise<void> {
+export async function getYears(req: Request, res: Response): Promise<void> {
+  try {
+    const query = `SELECT DISTINCT year FROM sections ORDER BY year ASC;`;
+    const result = await pool.query(query);
+    res.status(StatusCodes.OK).json({ result: result.rows });
+  } catch (err) {
+    console.log("Error occurred in getYears method:", { err });
+    res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+  }
+}
+
+export async function getAvgs(req: Request, res: Response): Promise<void> {
   const { deptList, levelList, avgLowerBound, avgHigherBound, yearStart, yearEnd } =
     req.body;
   try {

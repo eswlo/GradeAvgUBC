@@ -13,6 +13,7 @@ app.use(express.json());
 
 // Api endpoints
 app.get("/api/v1/grades/departments", GradesController.getDepts);
-app.post("/api/v1/grades/average", GradesController.getAvg);
+app.get("/api/v1/grades/years", GradesController.getYears);
+app.post("/api/v1/grades/averages", GradesController.getAvgs);
 
 export default app;

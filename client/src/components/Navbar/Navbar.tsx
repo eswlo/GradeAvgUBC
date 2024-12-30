@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.css";
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import { swalNormalAlert } from "../../utils";
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  deptList: string[];
+  yearList: string[];
+}
+
+const Navbar: React.FC<NavbarProps> = (props) => {
   const [courseLevel, setCourseLevel] = useState<string>("");
   const [yearStart, setYearStart] = useState<string>("");
   const [yearEnd, setYearEnd] = useState<string>("");
   const [avgLowerBound, setAvgLowerBound] = useState<string>("");
   const [avgHigherBound, setAvgHigherBound] = useState<string>("");
-
-  const swalNormalAlert = (warning: string) => {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: warning,
-    });
-  };
 
   const handleSetCourseLevel = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -59,6 +55,18 @@ const Navbar: React.FC = () => {
     }
   };
 
+  const fillYearListIn = () => {
+    return props.yearList.length === 0 ? (
+      <option disabled></option>
+    ) : (
+      props.yearList.map((id, index) => (
+        <option key={index} value={id}>
+          {id}
+        </option>
+      ))
+    );
+  };
+
   const getYearMenus = () => {
     return (
       <div>
@@ -70,13 +78,7 @@ const Navbar: React.FC = () => {
           onChange={handleSetYearRange}
           name="yearStartDropdownMenu"
         >
-          <option value="" disabled></option>
-          <option value="2000">2000</option>
-          <option value="2001">2001</option>
-          <option value="2002">2002</option>
-          <option value="2003">2003</option>
-          <option value="2004">2004</option>
-          <option value="2005">2005</option>
+          {fillYearListIn()}
         </select>
         <span>to</span>
         <select
@@ -86,13 +88,7 @@ const Navbar: React.FC = () => {
           onChange={handleSetYearRange}
           name="yearEndDropdownMenu"
         >
-          <option value="" disabled></option>
-          <option value="2000">2000</option>
-          <option value="2001">2001</option>
-          <option value="2002">2002</option>
-          <option value="2003">2003</option>
-          <option value="2004">2004</option>
-          <option value="2005">2005</option>
+          {fillYearListIn()}
         </select>
       </div>
     );
@@ -119,7 +115,7 @@ const Navbar: React.FC = () => {
   };
 
   const handleSubmit = () => {
-      /*
+    /*
 when processing query before submitting, check:
 depts and course level are selected and not empty;
 avg: check if empty string; convert to number to check if lowerbound <= higher bound.
@@ -133,10 +129,7 @@ if not, give warning and reset avgLowerBound and higher bound
 
 year: check if year start <= year end
 */
-  }
-
-
-
+  };
 
   return (
     <nav className={styles.navbar}>
@@ -172,10 +165,9 @@ year: check if year start <= year end
           </div>
         </div>
         <div className={styles.submitContainer}>
-        <button className={styles.submitBtn} onClick={handleSubmit}>
-					Submit
-				</button>
-
+          <button className={styles.submitBtn} onClick={handleSubmit}>
+            Submit
+          </button>
         </div>
       </div>
     </nav>
