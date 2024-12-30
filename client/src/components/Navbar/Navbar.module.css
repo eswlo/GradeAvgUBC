@@ -28,7 +28,7 @@
     margin-bottom: 10px;
     margin-right: 50px;
     width: 60%;
-    height: 50%;
+    height: 55%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -39,20 +39,25 @@
     color: black;
 }
 
+.deptsMenuContainer {
+    flex: 2;
+
+}
+
 /* Course level container */
 .levelMenuContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 190px;    
+    flex: 2;
     height: 100%;
     border-left: 1px solid #002145;
     border-right: 1px solid #002145;
 }
 
 .levelDropdownMenu {
-    width: 150px;
+    width: 130px;
     font-size: 1rem;
     font-weight: 500;
     padding: 3px;
@@ -68,8 +73,9 @@
 
 /* Input (year & avg) container */
 .inputContainer {
-    width: 350px;    
-    /* height: 100%; */
+    /* width: 350px;  */
+    flex:4;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -86,6 +92,7 @@
     font-weight: 500;
     width: 100%;
     height: 100%;
+    padding-top: 5px;
 }
 
 .yearRangeContainer span {
@@ -116,6 +123,8 @@
     font-weight: 500;
     width: 100%;
     height: 100%;
+    padding-bottom: 5px;
+
 }
 
 .avgBoundContainer span {
@@ -124,9 +133,37 @@
 
 .avgInputField {
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 450;
     width: 60px;
     border-radius: 3px;
     border: 1px dashed rgb(225, 223, 223);
 }
 
+.submitContainer {
+    flex:1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.submitBtn {
+	margin-left: 20px;
+    margin-right: 20px;
+    background: #002145;
+    border-radius: 10px;
+	color: white;
+    width: 90px;
+    height: 40px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.submitBtn:active {
+    background-color: #e0e0d1;
+    color: #002145;
+    box-shadow: 0 2px #c0c0b8;
+    transform: translateY(1px);
+}

@@ -118,7 +118,8 @@ const Navbar: React.FC = () => {
     }
   };
 
-  /*
+  const handleSubmit = () => {
+      /*
 when processing query before submitting, check:
 depts and course level are selected and not empty;
 avg: check if empty string; convert to number to check if lowerbound <= higher bound.
@@ -132,6 +133,10 @@ if not, give warning and reset avgLowerBound and higher bound
 
 year: check if year start <= year end
 */
+  }
+
+
+
 
   return (
     <nav className={styles.navbar}>
@@ -166,7 +171,12 @@ year: check if year start <= year end
             />
           </div>
         </div>
-        <div className={styles.queryContainer}>queryContainer</div>
+        <div className={styles.submitContainer}>
+        <button className={styles.submitBtn} onClick={handleSubmit}>
+					Submit
+				</button>
+
+        </div>
       </div>
     </nav>
   );
