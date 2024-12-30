@@ -1,14 +1,30 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.css";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 const Navbar: React.FC = () => {
-    const [courseLevel, setCourseLevel] = useState<string>("");
+  const [courseLevel, setCourseLevel] = useState<string>("");
+  const [yearStart, setYearStart] = useState<string>("");
+  const [yearEnd, setYearEnd] = useState<string>("");
+  const [avgLowerBound, setAvgLowerBound] = useState<string>("");
+  const [avgHigherBound, setAvgHigherBound] = useState<string>("");
 
-	const handleSetCourseLevel = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		if (event.target) {
-			setCourseLevel(event.target.value);
-		}
-	};
+  const swalNormalAlert = (warning: string) => {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: warning,
+    });
+  };
+
+  const handleSetCourseLevel = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    if (event.target) {
+      setCourseLevel(event.target.value);
+    }
+  };
 
   const getLevelMenu = () => {
     return (
@@ -20,7 +36,7 @@ const Navbar: React.FC = () => {
         name="levelDropdownMenu"
       >
         <option value="" disabled>
-        Coure level
+          Coure level
         </option>
         <option value="1">100 level</option>
         <option value="2">200 level</option>
@@ -32,6 +48,91 @@ const Navbar: React.FC = () => {
     );
   };
 
+  const handleSetYearRange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (event.target) {
+      const { id, value } = event.target; // Destructure id and value from event target
+      if (id === "yearStartDropdownMenu") {
+        setYearStart(value);
+      } else {
+        setYearEnd(value);
+      }
+    }
+  };
+
+  const getYearMenus = () => {
+    return (
+      <div>
+        <span>Year range from</span>
+        <select
+          className={styles.yearDropdownMenu}
+          id="yearStartDropdownMenu"
+          value={yearStart}
+          onChange={handleSetYearRange}
+          name="yearStartDropdownMenu"
+        >
+          <option value="" disabled></option>
+          <option value="2000">2000</option>
+          <option value="2001">2001</option>
+          <option value="2002">2002</option>
+          <option value="2003">2003</option>
+          <option value="2004">2004</option>
+          <option value="2005">2005</option>
+        </select>
+        <span>to</span>
+        <select
+          className={styles.yearDropdownMenu}
+          id="yearEndDropdownMenu"
+          value={yearEnd}
+          onChange={handleSetYearRange}
+          name="yearEndDropdownMenu"
+        >
+          <option value="" disabled></option>
+          <option value="2000">2000</option>
+          <option value="2001">2001</option>
+          <option value="2002">2002</option>
+          <option value="2003">2003</option>
+          <option value="2004">2004</option>
+          <option value="2005">2005</option>
+        </select>
+      </div>
+    );
+  };
+
+  const handleSetAvgBound = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target) {
+      const { id, value } = event.target; // Destructure id and value from event target
+      const numericValue = Number(value); // Convert to number
+      if (isNaN(numericValue)) {
+        swalNormalAlert("Invalid input, please enter a valid number!");
+      } else {
+        if (numericValue < 0 || numericValue > 100) {
+          swalNormalAlert("Input out of bound, please re-enter!");
+        } else {
+          if (id === "avgLowerBound") {
+            setAvgLowerBound(value);
+          } else {
+            setAvgHigherBound(value);
+          }
+        }
+      }
+    }
+  };
+
+  /*
+when processing query before submitting, check:
+depts and course level are selected and not empty;
+avg: check if empty string; convert to number to check if lowerbound <= higher bound.
+if not, give warning and reset avgLowerBound and higher bound
+      if (checkBoundCond()) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Invalid input bound, please re-enter!",
+        });
+
+year: check if year start <= year end
+*/
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.textContainer}>
@@ -41,8 +142,29 @@ const Navbar: React.FC = () => {
         <div className={styles.deptsMenuContainer}>deptsMenuContainer</div>
         <div className={styles.levelMenuContainer}>{getLevelMenu()}</div>
         <div className={styles.inputContainer}>
-          <div className={styles.yearRangeContainer}>yearRangeContainer</div>
-          <div className={styles.avgBoundContainer}>avgBoundContainer</div>
+          <div className={styles.yearRangeContainer}>{getYearMenus()}</div>
+          <div className={styles.avgBoundContainer}>
+            <span>Average from</span>
+            <input
+              type="text"
+              id="avgLowerBound"
+              placeholder="0.00"
+              className={styles.avgInputField}
+              name="avgInputField"
+              value={avgLowerBound}
+              onChange={handleSetAvgBound}
+            />
+            <span>to</span>
+            <input
+              type="text"
+              id="avgHigherBound"
+              placeholder="100.00"
+              className={styles.avgInputField}
+              name="avgInputField"
+              value={avgHigherBound}
+              onChange={handleSetAvgBound}
+            />
+          </div>
         </div>
         <div className={styles.queryContainer}>queryContainer</div>
       </div>
