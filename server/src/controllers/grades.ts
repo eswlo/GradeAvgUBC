@@ -8,13 +8,14 @@ export async function getDepts(req: Request, res: Response): Promise<void> {
     const result = await pool.query(query);
     res.status(StatusCodes.OK).json({ result: result.rows });
   } catch (err) {
-    console.log("Error occurred during pool query:", { err });
+    console.log("Error occurred in getDepts method:", { err });
     res.status(StatusCodes.BAD_REQUEST).json({ error: err });
   }
 }
 
 export async function getAvg(req: Request, res: Response): Promise<void> {
-  const { deptList, levelList, yearStart, yearEnd } = req.body;
+  const { deptList, levelList, avgLowerBound, avgHigherBound, yearStart, yearEnd } =
+    req.body;
   try {
     if (!deptList || deptList.length === 0) {
       res
@@ -27,6 +28,13 @@ export async function getAvg(req: Request, res: Response): Promise<void> {
       res
         .status(StatusCodes.BAD_REQUEST)
         .json({ error: "Provide at least one course level." });
+      return;
+    }
+
+    if (avgLowerBound > avgHigherBound) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Average lower bound is larger than higher bound." });
       return;
     }
 
@@ -61,7 +69,10 @@ export async function getAvg(req: Request, res: Response): Promise<void> {
       yearEnd,
       process.env.PGOVERALL_YEAR,
     ]);
-    res.status(StatusCodes.OK).json({ result: result.rows });
+    const filteredResult = result.rows.filter(
+      (row) => row.average >= avgLowerBound && row.average <= avgHigherBound,
+    );
+    res.status(StatusCodes.OK).json({ result: filteredResult });
   } catch (err) {
     console.log("Error occurred during pool query:", { err });
     res.status(StatusCodes.BAD_REQUEST).json({ error: err });

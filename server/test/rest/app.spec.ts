@@ -12,12 +12,16 @@ describe("Test backend server api", () => {
   const INVALID_QUERY = {
     deptList: ["adhe"],
     levelList: [300],
+    avgLowerBound: 80,
+    avgHigherBound: 85,
     yearStart: 19000,
     yearEnd: 2016,
   };
   const VALID_QUERY = {
     deptList: ["cpsc", "adhe"],
     levelList: [100, 300],
+    avgLowerBound: 80,
+    avgHigherBound: 85,
     yearStart: 2007,
     yearEnd: 2016,
   };
@@ -39,49 +43,9 @@ describe("Test backend server api", () => {
       average: "82.90",
     },
     {
-      dept: "adhe",
-      id: 330,
-      average: "85.25",
-    },
-    {
-      dept: "cpsc",
-      id: 110,
-      average: "74.41",
-    },
-    {
-      dept: "cpsc",
-      id: 121,
-      average: "75.54",
-    },
-    {
       dept: "cpsc",
       id: 301,
       average: "81.84",
-    },
-    {
-      dept: "cpsc",
-      id: 302,
-      average: "75.51",
-    },
-    {
-      dept: "cpsc",
-      id: 303,
-      average: "72.76",
-    },
-    {
-      dept: "cpsc",
-      id: 304,
-      average: "76.30",
-    },
-    {
-      dept: "cpsc",
-      id: 310,
-      average: "78.25",
-    },
-    {
-      dept: "cpsc",
-      id: 311,
-      average: "77.25",
     },
     {
       dept: "cpsc",
@@ -90,44 +54,9 @@ describe("Test backend server api", () => {
     },
     {
       dept: "cpsc",
-      id: 313,
-      average: "73.98",
-    },
-    {
-      dept: "cpsc",
-      id: 314,
-      average: "76.78",
-    },
-    {
-      dept: "cpsc",
-      id: 317,
-      average: "72.57",
-    },
-    {
-      dept: "cpsc",
       id: 319,
       average: "84.52",
-    },
-    {
-      dept: "cpsc",
-      id: 320,
-      average: "70.09",
-    },
-    {
-      dept: "cpsc",
-      id: 322,
-      average: "73.11",
-    },
-    {
-      dept: "cpsc",
-      id: 340,
-      average: "75.69",
-    },
-    {
-      dept: "cpsc",
-      id: 344,
-      average: "78.47",
-    },
+    }
   ];
 
   /*
@@ -161,7 +90,7 @@ describe("Test backend server api", () => {
         console.log(`GET Response: ${res.status}`);
         expect(res.status).to.be.equal(StatusCodes.OK);
         expect(res.body.result).to.be.an("array");
-        expect(res.body.result).to.deep.include({"dept": "cpsc"});
+        expect(res.body.result).to.deep.include({ dept: "cpsc" });
       })
       .catch(function (err) {
         console.log(err);
