@@ -1,7 +1,7 @@
 // Express app
 import express, { Application } from "express";
 import cors from "cors";
-import * as QueryController from "./controllers/query";
+import * as GradesController from "./controllers/grades";
 import dotenv from "dotenv";
 
 dotenv.config({ path: "../.env" }); //load the global .env at root directory
@@ -12,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Api endpoints
-app.post("/api/v1/query/average", QueryController.getAvg);
+app.get("/api/v1/grades/departments", GradesController.getDepts);
+app.post("/api/v1/grades/average", GradesController.getAvg);
 
 export default app;
