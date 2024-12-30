@@ -38,3 +38,18 @@
     display: flex;
     flex-direction: column;
 }
+
+.levelDropdownMenu {
+    width: 170px;
+    font-size: 1rem;
+    font-weight: 450;
+    padding: 3px;
+    border-radius: 5px;
+    border: 5px solid white;
+	cursor: pointer;    
+}
+
+.levelDropdownMenu option {
+    font-size: 1rem;
+    font-weight: 450;
+}
