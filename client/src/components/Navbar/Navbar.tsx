@@ -17,21 +17,103 @@ interface NavbarProps {
   handleSubmitFromNavbar: (arg: submitObj) => void;
 }
 
+interface CheckboxState {
+  [key: string]: boolean;
+}
+
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const [checkedDeptList, setCheckedDeptList] = useState<string[]>(["cpsc", "ahde", "math", "hist"]);
+  const [checkedDeptList, setCheckedDeptList] = useState<string[]>([]);
+  const [checkboxes, setCheckboxes] = useState<CheckboxState>({});
   const [courseLevelList, setCourseLevelList] = useState<string[]>(["100"]);
   const [yearStart, setYearStart] = useState<string>("");
   const [yearEnd, setYearEnd] = useState<string>("");
   const [avgLowerBound, setAvgLowerBound] = useState<string>("");
   const [avgHigherBound, setAvgHigherBound] = useState<string>("");
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   useEffect(() => {
+    const unReduced: CheckboxState[] = [];
+    props.deptList.forEach((dept) => {
+      const checkboxState: CheckboxState = {[dept]: false};
+      unReduced.push(checkboxState);
+    });
+    const reduced = unReduced.reduce((acc, obj) => ({ ...acc, ...obj }), {}) // Convert the array of objects to a single object
+    setCheckboxes(reduced);
+    console.log(reduced);
+
     const yearListLen = props.yearList.length;
     if (yearListLen !== 0) {
       setYearStart(props.yearList[0]);
       setYearEnd(props.yearList[yearListLen - 1]);
     }
-  }, [props.yearList]);
+  }, [props.deptList, props.yearList]);
+
+  useEffect(() => {
+    const newCheckedDeptList: string[] = [];
+    for (const key in checkboxes) {
+      if (checkboxes[key]) {
+        newCheckedDeptList.push(key);
+      }
+    }
+    console.log(newCheckedDeptList);
+    setCheckedDeptList(newCheckedDeptList);
+  }, [checkboxes]);
+
+  const showCheckboxes = () => {
+    // console.log(isExpanded);
+    setIsExpanded((prevState) => !prevState);
+  };
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, checked} = event.target;
+    setCheckboxes((prevState) => ({
+      ...prevState,
+      [name]: checked,
+    }));
+  }
+
+  const createLabels = () => {
+    return props.deptList.map((dept) => {
+      return (
+        <div key={dept}>
+          <label htmlFor={dept}>
+          <input 
+            type="checkbox" 
+            id={dept}
+            name={dept}
+            checked={checkboxes[dept]}
+            onChange={handleCheckboxChange}
+            />
+          {dept}
+        </label>
+          
+        </div>
+
+      );
+    });
+  };
+
+  const createDeptMenu = () => {
+    return (
+      <div className={styles.multiselect}>
+        <div className={styles.selectBox} onClick={showCheckboxes}>
+          <select className={styles.deptDropdownMenu}>
+            <option>Department(s)</option>
+          </select>
+          <div className={styles.overSelect}></div>
+        </div>
+        {isExpanded && (
+          <div className={styles.checkboxes}>
+            <label htmlFor="all">
+              <input type="checkbox" id="all"/>
+              Select all
+            </label>
+            {createLabels()}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const handleSetCourseLevel = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -42,7 +124,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     }
   };
 
-  const getLevelMenu = () => {
+  const createLevelMenu = () => {
     return (
       <select
         className={styles.levelDropdownMenu}
@@ -87,7 +169,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     );
   };
 
-  const getYearMenus = () => {
+  const createYearMenus = () => {
     return (
       <div>
         <span>Year range from</span>
@@ -134,20 +216,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     }
   };
 
-  /*
-when processing query before submitting, check:
-depts and course levels are selected and not empty; convert courselevelList to number[]
-avg: check if empty string; convert to number to check if lowerbound <= higher bound.
-if not, give warning and reset avgLowerBound and higher bound
-      if (checkBoundCond()) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Invalid input bound, please re-enter!",
-        });
-
-years: convert to number and check if year start <= year end
-*/
   const isValidValuesForSubmit = () => {
     if (checkedDeptList.length === 0) {
       throw new Error("Must select at least one department/subject.");
@@ -169,7 +237,7 @@ years: convert to number and check if year start <= year end
     try {
       isValidValuesForSubmit();
       const objForSubmit: submitObj = {
-        checkedDeptsForSubmit: checkedDeptList,
+        checkedDeptsForSubmit: checkedDeptList.map((dept) => dept.toLowerCase()),
         checkedLevelsForSubmit: courseLevelList.map((courseLevelStr) =>
           Number(courseLevelStr),
         ),
@@ -195,10 +263,10 @@ years: convert to number and check if year start <= year end
         <h1>GradeAvgUBC</h1>
       </div>
       <div className={styles.selectContainer}>
-        <div className={styles.deptsMenuContainer}>deptsMenuContainer</div>
-        <div className={styles.levelMenuContainer}>{getLevelMenu()}</div>
+        <div className={styles.deptsMenuContainer}>{createDeptMenu()}</div>
+        <div className={styles.levelMenuContainer}>{createLevelMenu()}</div>
         <div className={styles.inputContainer}>
-          <div className={styles.yearRangeContainer}>{getYearMenus()}</div>
+          <div className={styles.yearRangeContainer}>{createYearMenus()}</div>
           <div className={styles.avgBoundContainer}>
             <span>Average from</span>
             <input

@@ -11,26 +11,25 @@ interface CarouselProps {
 }
 
 const Carousel: React.FC<CarouselProps> = (props) => {
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 800,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
-    const settings = {
-      dots: true,
-      infinite: false,
-      speed: 800,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
+  return (
+    <div className={styles.sliderContainer}>
+      <Slider {...settings}>
+        {props.avgListGroup.map((list, index) => (
+          <div key={index} className={styles.slide}>
+            <Card fetchedAvgGrades={list} />
+          </div>
+        ))}
+      </Slider>
+    </div>
+  );
+};
 
-    return (
-      <div className={styles.sliderContainer}>
-        <Slider {...settings}>
-          {props.avgListGroup.map((list, index) => (
-            <div key={index} className={styles.slide}>
-            <Card fetchedAvgGrades={list}/>
-            </div>
-          ))}
-        </Slider>
-      </div>
-    );
-  }
-  
-  export default Carousel;
+export default Carousel;

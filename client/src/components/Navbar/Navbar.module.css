@@ -39,10 +39,63 @@
     color: black;
 }
 
+/* Dept Menu */
 .deptsMenuContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     flex: 2;
-
+    height: 100%;
+    position: relative;
 }
+
+  .deptDropdownMenu {
+    width: 150px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 3px;
+    border-radius: 5px;
+    border: 1px dashed rgb(225, 223, 223);
+	cursor: pointer;  
+  }
+
+  .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  
+  .checkboxes {
+    width: 150px;
+    max-height: 350px; /* Set a maximum height */
+    display: flex;
+    flex-direction: column;
+    border: 1px #dadada solid;
+    border-radius: 5px;
+    position: absolute;
+    color: black;
+    background-color: white;
+    padding: 10px 10px;
+    overflow: auto;
+  }
+  
+  .checkboxes label {
+    padding: 5px 0px;
+    display: block;
+    margin-right: .5rem;
+  }
+
+  .checkboxes label:hover {
+    background-color: #1e90ff;
+  }
+
+  .checkboxes input {
+    margin-right: .5rem;
+  }
+  
 
 /* Course level container */
 .levelMenuContainer {

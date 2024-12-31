@@ -13,14 +13,13 @@ const App: React.FC = () => {
   const [fetchedAvgGrades, setFetchedAvgGrades] = useState<AvgObj[]>([]);
   const [avgListGroup, setAvgListGroup] = useState<AvgObj[][]>([]);
 
-
   // useEffect to check if server is connected and retrive the year range and dept lists first
   useEffect(() => {
     const setUp = async () => {
       try {
         const fetchedDeptList = await fetchDeptList();
         // console.log(fetchedDeptList);
-        setDeptList(fetchedDeptList);
+        setDeptList(fetchedDeptList.map((dept) => dept.toUpperCase()));
 
         const fetchedYearList = await fetchYearList();
         // console.log(fetchedYearList);
@@ -36,7 +35,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     groupAvgLists();
-  }, [fetchedAvgGrades])  
+  }, [fetchedAvgGrades]);
 
   const groupAvgLists = () => {
     const newListGroup: AvgObj[][] = [];
@@ -50,9 +49,9 @@ const App: React.FC = () => {
         } else {
           break;
         }
-      };
+      }
       newListGroup.push(newList);
-    };
+    }
     console.log("newListGroup");
     console.log(newListGroup);
     setAvgListGroup(newListGroup);
@@ -80,8 +79,7 @@ const App: React.FC = () => {
         yearList={yearList}
         handleSubmitFromNavbar={handleSubmitFromNavbar}
       />
-      <Main 
-        avgListGroup={avgListGroup}/>
+      <Main avgListGroup={avgListGroup} />
     </div>
   );
 };
