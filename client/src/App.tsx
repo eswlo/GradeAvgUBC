@@ -5,11 +5,12 @@ import Navbar from "./components/Navbar/Navbar";
 import { submitObj } from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
 import { swalNormalAlert } from "./utils";
-import { fetchDeptList, fetchYearList, fetchAvgGrades } from "./api";
+import { fetchDeptList, fetchYearList, fetchAvgGrades, AvgObj } from "./api";
 
 const App: React.FC = () => {
   const [deptList, setDeptList] = useState<string[]>([]);
   const [yearList, setYearList] = useState<string[]>([]);
+  const [fetchedAvgGrades, setFetchedAvgGrades] = useState<AvgObj[]>([]);
 
   // useEffect to check if server is connected and retrive the year range and dept lists first
   useEffect(() => {
@@ -37,9 +38,10 @@ const App: React.FC = () => {
 
     try {
       const fetchedAvgGrades = await fetchAvgGrades(objForSubmit);
-      console.log(fetchedAvgGrades);
-    } catch(err) {
-      const errStr = err as string; 
+      // console.log(fetchedAvgGrades);
+      setFetchedAvgGrades(fetchedAvgGrades);
+    } catch (err) {
+      const errStr = err as string;
       console.log(`errStr: ${errStr}`);
       swalNormalAlert(errStr);
     }
@@ -47,8 +49,13 @@ const App: React.FC = () => {
 
   return (
     <div className={styles.appContainer}>
-      <Navbar deptList={deptList} yearList={yearList} handleSubmitFromNavbar={handleSubmitFromNavbar}/>
-      <Main />
+      <Navbar
+        deptList={deptList}
+        yearList={yearList}
+        handleSubmitFromNavbar={handleSubmitFromNavbar}
+      />
+      <Main 
+        fetchedAvgGrades={fetchedAvgGrades}/>
     </div>
   );
 };

@@ -4,9 +4,9 @@ import { swalNormalAlert } from "../../utils";
 
 export interface submitObj {
   checkedDeptsForSubmit: string[];
-  checkedLevelsForSubmit: number[]; 
+  checkedLevelsForSubmit: number[];
   yearStartForSubmit: number;
-  yearEndForSubmit: number
+  yearEndForSubmit: number;
   avgLowerBoundForSubmit: number;
   avgHigherBoundForSubmit: number;
 }
@@ -18,7 +18,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const [checkedDeptList, setCheckedDeptList] = useState<string[]>([]);
+  const [checkedDeptList, setCheckedDeptList] = useState<string[]>(["cpsc"]);
   const [courseLevelList, setCourseLevelList] = useState<string[]>(["100"]);
   const [yearStart, setYearStart] = useState<string>("");
   const [yearEnd, setYearEnd] = useState<string>("");
@@ -37,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     if (event.target) {
-        const newList: string[] = [event.target.value];
+      const newList: string[] = [event.target.value];
       setCourseLevelList(newList);
     }
   };
@@ -134,7 +134,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     }
   };
 
-      /*
+  /*
 when processing query before submitting, check:
 depts and course levels are selected and not empty; convert courselevelList to number[]
 avg: check if empty string; convert to number to check if lowerbound <= higher bound.
@@ -148,19 +148,19 @@ if not, give warning and reset avgLowerBound and higher bound
 
 years: convert to number and check if year start <= year end
 */
-const isValidValuesForSubmit = () => {
-  if (checkedDeptList.length === 0) {
-    throw new Error("Must select at least one department/subject.");
-  } else if (courseLevelList.length === 0) {
-    throw new Error("Must select at least one course level.");
-  } else if (Number(yearStart) > Number(yearEnd)) {
-    throw new Error("Invalid year range.");
-  } else if (avgLowerBound.length === 0 || avgHigherBound.length === 0) {
-    throw new Error("Please enter search bound for grade average.");
-  } else if (Number(avgLowerBound) > Number(avgHigherBound)) {
-    throw new Error("Invalid average bound.");
-  }
-}
+  const isValidValuesForSubmit = () => {
+    if (checkedDeptList.length === 0) {
+      throw new Error("Must select at least one department/subject.");
+    } else if (courseLevelList.length === 0) {
+      throw new Error("Must select at least one course level.");
+    } else if (Number(yearStart) > Number(yearEnd)) {
+      throw new Error("Invalid year range.");
+    } else if (avgLowerBound.length === 0 || avgHigherBound.length === 0) {
+      throw new Error("Please enter search bound for grade average.");
+    } else if (Number(avgLowerBound) > Number(avgHigherBound)) {
+      throw new Error("Invalid average bound.");
+    }
+  };
 
   const handleSubmit = () => {
     // console.log(yearStart);
@@ -170,14 +170,16 @@ const isValidValuesForSubmit = () => {
       isValidValuesForSubmit();
       const objForSubmit: submitObj = {
         checkedDeptsForSubmit: checkedDeptList,
-        checkedLevelsForSubmit: courseLevelList.map(courseLevelStr => Number(courseLevelStr)),
+        checkedLevelsForSubmit: courseLevelList.map((courseLevelStr) =>
+          Number(courseLevelStr),
+        ),
         yearStartForSubmit: Number(yearStart),
         yearEndForSubmit: Number(yearEnd),
         avgLowerBoundForSubmit: Number(avgLowerBound),
         avgHigherBoundForSubmit: Number(avgHigherBound),
-      }
+      };
       props.handleSubmitFromNavbar(objForSubmit);
-    } catch(err) {
+    } catch (err) {
       if (err instanceof Error) {
         swalNormalAlert(err.message);
       } else {
@@ -186,7 +188,7 @@ const isValidValuesForSubmit = () => {
       }
     }
   };
-    
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.textContainer}>

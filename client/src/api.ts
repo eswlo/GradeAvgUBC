@@ -11,11 +11,11 @@ type YearObj = {
   year: number;
 };
 
-type AvgObj = {
+export type AvgObj = {
   dept: string;
   id: number;
   average: string;
-}
+};
 
 export const fetchDeptList = async (): Promise<string[]> => {
   try {
@@ -50,22 +50,24 @@ export const fetchYearList = async (): Promise<string[]> => {
   }
 };
 
-export const fetchAvgGrades = async (objForSubmit: submitObj): Promise<AvgObj[]> => {
+export const fetchAvgGrades = async (
+  objForSubmit: submitObj,
+): Promise<AvgObj[]> => {
   try {
-		const response = await fetch(`${URL}/api/v1/grades/averages`, {
-			method: "POST",
-			headers: {
-        'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-        "deptList": objForSubmit.checkedDeptsForSubmit,
-        "levelList": objForSubmit.checkedLevelsForSubmit,
-      "yearStart": objForSubmit.yearStartForSubmit,
-        "yearEnd": objForSubmit.yearEndForSubmit,
-        "avgLowerBound": objForSubmit.avgLowerBoundForSubmit,
-        "avgHigherBound": objForSubmit.avgHigherBoundForSubmit
+    const response = await fetch(`${URL}/api/v1/grades/averages`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        deptList: objForSubmit.checkedDeptsForSubmit,
+        levelList: objForSubmit.checkedLevelsForSubmit,
+        yearStart: objForSubmit.yearStartForSubmit,
+        yearEnd: objForSubmit.yearEndForSubmit,
+        avgLowerBound: objForSubmit.avgLowerBoundForSubmit,
+        avgHigherBound: objForSubmit.avgHigherBoundForSubmit,
       }),
-		});
+    });
 
     if (response.status === StatusCodes.OK) {
       const data = await response.json();

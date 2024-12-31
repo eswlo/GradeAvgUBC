@@ -6,6 +6,9 @@
     height: 100vh;
     position: relative;
     margin-top: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
 .main::after {
@@ -21,4 +24,16 @@
         rgba(255, 255, 255, 0.5)  /* corners */
       );    
       z-index: 1;                                  
+  }
+
+  .cardContainer {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: white;
+    position: relative; /* Ensure the container can be layered above the main background */
+    z-index: 2; /* Placing it above the background */
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
