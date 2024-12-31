@@ -25,20 +25,21 @@ export async function getYears(req: Request, res: Response): Promise<void> {
 }
 
 export async function getAvgs(req: Request, res: Response): Promise<void> {
-  const { deptList, levelList, avgLowerBound, avgHigherBound, yearStart, yearEnd } =
+  const { deptList, levelList, yearStart, yearEnd, avgLowerBound, avgHigherBound } =
     req.body;
+
   try {
     if (!deptList || deptList.length === 0) {
       res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Provide at least one department." });
+        .json({ error: "Please provide at least one department." });
       return;
     }
 
     if (!levelList || levelList.length === 0) {
       res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Provide at least one course level." });
+        .json({ error: "Please provide at least one course level." });
       return;
     }
 

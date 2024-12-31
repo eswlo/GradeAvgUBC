@@ -1,18 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 import { swalNormalAlert } from "../../utils";
+
+export interface submitObj {
+  checkedDeptsForSubmit: string[];
+  checkedLevelsForSubmit: number[]; 
+  yearStartForSubmit: number;
+  yearEndForSubmit: number
+  avgLowerBoundForSubmit: number;
+  avgHigherBoundForSubmit: number;
+}
 
 interface NavbarProps {
   deptList: string[];
   yearList: string[];
+  handleSubmitFromNavbar: (arg: submitObj) => void;
 }
 
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const [courseLevelList, setCourseLevelList] = useState<string[]>([]);
+  const [checkedDeptList, setCheckedDeptList] = useState<string[]>([]);
+  const [courseLevelList, setCourseLevelList] = useState<string[]>(["100"]);
   const [yearStart, setYearStart] = useState<string>("");
   const [yearEnd, setYearEnd] = useState<string>("");
   const [avgLowerBound, setAvgLowerBound] = useState<string>("");
   const [avgHigherBound, setAvgHigherBound] = useState<string>("");
+
+  useEffect(() => {
+    const yearListLen = props.yearList.length;
+    if (yearListLen !== 0) {
+      setYearStart(props.yearList[0]);
+      setYearEnd(props.yearList[yearListLen - 1]);
+    }
+  }, [props.yearList]);
 
   const handleSetCourseLevel = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -28,19 +47,19 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       <select
         className={styles.levelDropdownMenu}
         id="levelDropdownMenu"
-        value={courseLevelList}
+        value={courseLevelList[0]}
         onChange={handleSetCourseLevel}
         name="levelDropdownMenu"
       >
         <option value="" disabled>
-          Coure level
+          Course level
         </option>
-        <option value="1">100 level</option>
-        <option value="2">200 level</option>
-        <option value="3">300 level</option>
-        <option value="4">400 level</option>
-        <option value="5">500 level</option>
-        <option value="6">600 level</option>
+        <option value="100">100 level</option>
+        <option value="200">200 level</option>
+        <option value="300">300 level</option>
+        <option value="400">400 level</option>
+        <option value="500">500 level</option>
+        <option value="600">600 level</option>
       </select>
     );
   };
@@ -115,8 +134,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     }
   };
 
-  const handleSubmit = () => {
-    /*
+      /*
 when processing query before submitting, check:
 depts and course levels are selected and not empty; convert courselevelList to number[]
 avg: check if empty string; convert to number to check if lowerbound <= higher bound.
@@ -130,8 +148,45 @@ if not, give warning and reset avgLowerBound and higher bound
 
 years: convert to number and check if year start <= year end
 */
-  };
+const isValidValuesForSubmit = () => {
+  if (checkedDeptList.length === 0) {
+    throw new Error("Must select at least one department/subject.");
+  } else if (courseLevelList.length === 0) {
+    throw new Error("Must select at least one course level.");
+  } else if (Number(yearStart) > Number(yearEnd)) {
+    throw new Error("Invalid year range.");
+  } else if (avgLowerBound.length === 0 || avgHigherBound.length === 0) {
+    throw new Error("Please enter search bound for grade average.");
+  } else if (Number(avgLowerBound) > Number(avgHigherBound)) {
+    throw new Error("Invalid average bound.");
+  }
+}
 
+  const handleSubmit = () => {
+    // console.log(yearStart);
+    // console.log(yearEnd);
+    // console.log(courseLevelList);
+    try {
+      isValidValuesForSubmit();
+      const objForSubmit: submitObj = {
+        checkedDeptsForSubmit: checkedDeptList,
+        checkedLevelsForSubmit: courseLevelList.map(courseLevelStr => Number(courseLevelStr)),
+        yearStartForSubmit: Number(yearStart),
+        yearEndForSubmit: Number(yearEnd),
+        avgLowerBoundForSubmit: Number(avgLowerBound),
+        avgHigherBoundForSubmit: Number(avgHigherBound),
+      }
+      props.handleSubmitFromNavbar(objForSubmit);
+    } catch(err) {
+      if (err instanceof Error) {
+        swalNormalAlert(err.message);
+      } else {
+        swalNormalAlert(`An unexpected error occurred`);
+        console.log("An unexpected error occurred:", err);
+      }
+    }
+  };
+    
   return (
     <nav className={styles.navbar}>
       <div className={styles.textContainer}>
