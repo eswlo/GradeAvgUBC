@@ -10,10 +10,8 @@ interface MainProps {
 const Main: React.FC<MainProps> = (props) => {
   return (
     <main className={styles.main}>
-      <div className={styles.cardContainer}>
       <Card 
       fetchedAvgGrades={props.fetchedAvgGrades}/>
-      </div>
     </main>
   );
 };

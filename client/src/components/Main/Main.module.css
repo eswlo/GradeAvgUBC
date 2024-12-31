@@ -26,14 +26,3 @@
       z-index: 1;                                  
   }
 
-  .cardContainer {
-    border: 1px solid black;
-    border-radius: 5px;
-    background-color: white;
-    position: relative; /* Ensure the container can be layered above the main background */
-    z-index: 2; /* Placing it above the background */
-    width: 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }

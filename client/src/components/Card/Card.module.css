@@ -1,0 +1,60 @@
+.card {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: white;
+    position: relative; /* Ensure the container can be layered above the main background */
+    z-index: 2; /* Placing it above the background */
+    width: 60%;
+    height: 70%;
+    display: flex; /* Grid container */
+    justify-content: center; /* Centers horizontally inside each grid item */
+    align-items: center; /* Centers vertically inside each grid item */
+}
+
+.chartContainer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 450px;
+    height: 320px;
+    top: 30px;
+    left: 20px;
+}
+
+
+.tableContainer {
+    position: absolute;
+    width: 300px;
+    max-width: 300px;
+    position: absolute;
+    top: 50px;
+    right: 30px; 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0px;
+  }
+  
+  table th, table td {
+    padding: 8px 3px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  table th {
+    flex-direction: column;
+    background-color: #002145;
+    color: white;
+    font-weight: 200;
+    font-size: 0.8rem;
+  }
+
+  table td {
+    color: #002145;
+    font-weight: 200;
+    font-size: 0.8rem;
+
+  }

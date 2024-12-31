@@ -10,7 +10,8 @@ import {
 } from "chart.js";
 import { useState, useEffect } from "react";
 import { AvgObj } from "../../api";
-
+import styles from "./Card.module.css";
+ 
 const BACKGROUND_COLORS = [
   "rgba(255, 99, 132, 0.2)",
   "rgba(255, 159, 64, 0.2)",
@@ -46,17 +47,31 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = (props) => {
 	const [labelList, setLabelList] = useState<string[]>([]);
+    // const [titleList, setTitleList] = useState<string[]>([]);
 	const [dataList, setDataList] = useState<number[]>([]);
 	const backgroundColors: string[] = [];
 	const borderColors: string[] = [];
 
     useEffect(() => {
-        const newLabelList: string[] = props.fetchedAvgGrades.map((entry) => {
-            return (entry.dept + String(entry.id));
+        // const newLabelList: string[] = props.fetchedAvgGrades.map((entry) => {
+        //     return (entry.dept + String(entry.id));
+        // });
+        // // console.log(newLabelList);
+        // const newTitleList: string[] = props.fetchedAvgGrades.map(entry => entry.title);
+        // const newDataList: number[] = props.fetchedAvgGrades.map((entry) => Number(entry.average));
+
+        const newLabelList: string[] = [];
+        // const newTitleList: string[] = [];
+        const newDataList: number[] = [];
+
+        props.fetchedAvgGrades.forEach((entry) => {
+            newLabelList.push(entry.dept + String(entry.id));
+            // newTitleList.push(entry.title);
+            newDataList.push(Number(entry.average));
         });
-        // console.log(newLabelList);
-        const newDataList: number[] = props.fetchedAvgGrades.map((entry) => Number(entry.average));
+
         setLabelList(newLabelList);
+        // setTitleList(newTitleList);
         setDataList(newDataList);
     }, [props.fetchedAvgGrades]);
 
@@ -82,7 +97,7 @@ const data = {
 
 const options = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     scales: {
         y: {
             beginAtZero: true,
@@ -92,7 +107,7 @@ const options = {
 
 const makeChart = () => {
     if (props.fetchedAvgGrades.length === 0) {
-        return <h2>No data to render insight at this moment</h2>;
+        return <h3>No data to render chart at this moment</h3>;
     } else {
         return getBarChartNoDonut();
     }
@@ -100,13 +115,62 @@ const makeChart = () => {
 
 const getBarChartNoDonut = () => {
     return (
-        <div>
+        <div className={styles.chartContainer}>
             <Bar data={data} options={options} />
         </div>
     );
 };
 
-  return (<div>{makeChart()}</div>);
+const getTableBody = () => {
+    if (props.fetchedAvgGrades.length !== 0) {
+        return (
+            <tbody>
+                {props.fetchedAvgGrades.map((entry) => (
+                    <tr key={entry.dept + String(entry.id)}>
+                        <td>{entry.dept.toUpperCase() + " " + String(entry.id)}</td>
+                        <td>{entry.title}</td>
+                        <td>{entry.average}</td>
+                    </tr>
+                ))}
+            </tbody>
+        )
+    } else {
+        return (
+        <tbody>
+            <td>n/a</td>
+            <td>n/a</td>
+            <td>n/a</td>
+        </tbody>
+        )
+    }
+}
+
+const makeTable = () => {
+    return (
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject Code</th>
+                        <th>Subject Title</th>
+                        <th>Grade Average</th>
+                    </tr>
+                </thead>
+                {getTableBody()}
+            </table>
+        </div>
+    );
+};
+
+  return (
+  <div className={styles.card}>
+    <div>
+        {makeChart()}
+    </div>
+    <div className={styles.tableContainer}>
+        {makeTable()}
+    </div>
+</div>);
 };
 
 

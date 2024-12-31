@@ -14,6 +14,7 @@ type YearObj = {
 export type AvgObj = {
   dept: string;
   id: number;
+  title: string;
   average: string;
 };
 

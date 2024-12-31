@@ -64,7 +64,7 @@ export async function getAvgs(req: Request, res: Response): Promise<void> {
       .join(" OR ");
 
     const query = `
-            SELECT dept, id, ROUND(AVG(avg), 2) AS average
+            SELECT dept, id, title, ROUND(AVG(avg), 2) AS average
             FROM ${process.env.PGTABLE_SECTIONS}
             WHERE dept = ANY($1)
                 AND (
@@ -72,8 +72,8 @@ export async function getAvgs(req: Request, res: Response): Promise<void> {
                     OR year = $4
                 )
                 AND (${levelConditions})   
-            GROUP BY dept, id
-            ORDER BY dept, id;
+            GROUP BY dept, id, title
+            ORDER BY average DESC, dept DESC, id DESC, title DESC;
         `;
     const result = await pool.query(query, [
       deptList,
