@@ -18,7 +18,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const [checkedDeptList, setCheckedDeptList] = useState<string[]>(["cpsc"]);
+  const [checkedDeptList, setCheckedDeptList] = useState<string[]>(["cpsc", "ahde", "math", "hist"]);
   const [courseLevelList, setCourseLevelList] = useState<string[]>(["100"]);
   const [yearStart, setYearStart] = useState<string>("");
   const [yearEnd, setYearEnd] = useState<string>("");

@@ -101,16 +101,14 @@ const options = {
     scales: {
         y: {
             beginAtZero: true,
+            min: 0.00,
+            max: 100.00
         },
     },
 };
 
 const makeChart = () => {
-    if (props.fetchedAvgGrades.length === 0) {
-        return <h3>No data to render chart at this moment</h3>;
-    } else {
-        return getBarChartNoDonut();
-    }
+    return getBarChartNoDonut();
 };
 
 const getBarChartNoDonut = () => {

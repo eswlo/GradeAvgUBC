@@ -11,6 +11,8 @@ const App: React.FC = () => {
   const [deptList, setDeptList] = useState<string[]>([]);
   const [yearList, setYearList] = useState<string[]>([]);
   const [fetchedAvgGrades, setFetchedAvgGrades] = useState<AvgObj[]>([]);
+  const [avgListGroup, setAvgListGroup] = useState<AvgObj[][]>([]);
+
 
   // useEffect to check if server is connected and retrive the year range and dept lists first
   useEffect(() => {
@@ -32,14 +34,38 @@ const App: React.FC = () => {
     setUp();
   }, []);
 
+  useEffect(() => {
+    groupAvgLists();
+  }, [fetchedAvgGrades])  
+
+  const groupAvgLists = () => {
+    const newListGroup: AvgObj[][] = [];
+    const listForProcess = [...fetchedAvgGrades];
+    while (listForProcess.length !== 0) {
+      const newList: AvgObj[] = [];
+      for (let i = 0; i < 7; i++) {
+        const popped: AvgObj | undefined = listForProcess.shift();
+        if (popped !== undefined) {
+          newList.push(popped);
+        } else {
+          break;
+        }
+      };
+      newListGroup.push(newList);
+    };
+    console.log("newListGroup");
+    console.log(newListGroup);
+    setAvgListGroup(newListGroup);
+  };
+
   const handleSubmitFromNavbar = async (objForSubmit: submitObj) => {
     console.log(`objForSubmit`);
     console.log(objForSubmit);
 
     try {
-      const fetchedAvgGrades = await fetchAvgGrades(objForSubmit);
+      const fetched = await fetchAvgGrades(objForSubmit);
       // console.log(fetchedAvgGrades);
-      setFetchedAvgGrades(fetchedAvgGrades);
+      setFetchedAvgGrades(fetched);
     } catch (err) {
       const errStr = err as string;
       console.log(`errStr: ${errStr}`);
@@ -55,7 +81,7 @@ const App: React.FC = () => {
         handleSubmitFromNavbar={handleSubmitFromNavbar}
       />
       <Main 
-        fetchedAvgGrades={fetchedAvgGrades}/>
+        avgListGroup={avgListGroup}/>
     </div>
   );
 };

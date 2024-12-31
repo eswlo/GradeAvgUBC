@@ -1,11 +1,14 @@
 .card {
-    border: 1px solid black;
+    border: 1px solid lightgray;
     border-radius: 5px;
-    background-color: white;
-    position: relative; /* Ensure the container can be layered above the main background */
-    z-index: 2; /* Placing it above the background */
-    width: 60%;
-    height: 70%;
+    background: radial-gradient(
+        circle, /* Shape of the gradient */
+        rgba(255, 255, 255, 0.8), /* center */
+        rgba(255, 255, 255, 0.65)  /* corners */
+      );      position: relative; /* Ensure the container can be layered above the main background */
+    z-index: 3; /* Placing it above the background */
+    width: 100%;
+    height: 100%;
     display: flex; /* Grid container */
     justify-content: center; /* Centers horizontally inside each grid item */
     align-items: center; /* Centers vertically inside each grid item */
