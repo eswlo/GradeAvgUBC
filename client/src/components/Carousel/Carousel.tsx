@@ -12,7 +12,7 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = (props) => {
   const settings = {
-    dots: true,
+    dots: props.avgListGroup.length > 30 ? false : true,
     infinite: false,
     speed: 800,
     slidesToShow: 1,

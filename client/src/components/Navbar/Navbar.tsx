@@ -24,6 +24,7 @@ interface CheckboxState {
 const Navbar: React.FC<NavbarProps> = (props) => {
   const [checkedDeptList, setCheckedDeptList] = useState<string[]>([]);
   const [checkboxes, setCheckboxes] = useState<CheckboxState>({});
+  const [isSelectAll, setIsSelectAll] = useState<boolean>(false);
   const [courseLevelList, setCourseLevelList] = useState<string[]>(["100"]);
   const [yearStart, setYearStart] = useState<string>("");
   const [yearEnd, setYearEnd] = useState<string>("");
@@ -59,6 +60,26 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     setCheckedDeptList(newCheckedDeptList);
   }, [checkboxes]);
 
+  useEffect(() => {
+    if (isSelectAll) {
+      setCheckboxes((prevState) => {
+        const updatedCheckboxes = {...prevState};
+        for (const key in updatedCheckboxes) {
+          updatedCheckboxes[key] = true;
+        };
+        return updatedCheckboxes;
+      });
+    } else {
+      setCheckboxes((prevState) => {
+        const updatedCheckboxes = {...prevState};
+        for (const key in updatedCheckboxes) {
+          updatedCheckboxes[key] = false;
+        };
+        return updatedCheckboxes;
+      });
+    }
+  }, [isSelectAll]);
+
   const showCheckboxes = () => {
     // console.log(isExpanded);
     setIsExpanded((prevState) => !prevState);
@@ -77,21 +98,23 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       return (
         <div key={dept}>
           <label htmlFor={dept}>
-          <input 
-            type="checkbox" 
-            id={dept}
-            name={dept}
-            checked={checkboxes[dept]}
-            onChange={handleCheckboxChange}
-            />
-          {dept}
+            <input 
+              type="checkbox" 
+              id={dept}
+              name={dept}
+              checked={checkboxes[dept]}
+              onChange={handleCheckboxChange}
+              />
+            {dept}
         </label>
-          
         </div>
-
       );
     });
   };
+
+  const handleSelectAllChange = () => {
+    setIsSelectAll((prevState) => !prevState);
+  }
 
   const createDeptMenu = () => {
     return (
@@ -105,7 +128,13 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         {isExpanded && (
           <div className={styles.checkboxes}>
             <label htmlFor="all">
-              <input type="checkbox" id="all"/>
+              <input 
+                type="checkbox" 
+                id="all"
+                name="all"
+                checked={isSelectAll}
+                onChange={handleSelectAllChange}
+                />
               Select all
             </label>
             {createLabels()}
