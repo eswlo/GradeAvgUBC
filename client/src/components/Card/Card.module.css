@@ -21,17 +21,17 @@
     align-items: center;
     width: 450px;
     height: 320px;
-    top: 30px;
+    top: 50px;
     left: 20px;
 }
 
 
 .tableContainer {
     position: absolute;
-    width: 300px;
-    max-width: 300px;
+    width: 400px;
+    max-width: 400px;
     position: absolute;
-    top: 50px;
+    top: 70px;
     right: 30px; 
 }
 
@@ -44,20 +44,20 @@ table {
   table th, table td {
     padding: 8px 3px;
     text-align: center;
-    border: 1px solid #ddd;
+    border: 1px solid #b6b6b6;
   }
   
   table th {
     flex-direction: column;
     background-color: #002145;
     color: white;
-    font-weight: 200;
-    font-size: 0.8rem;
+    font-weight: 500;
+    font-size: 1rem;
   }
 
   table td {
     color: #002145;
-    font-weight: 200;
-    font-size: 0.8rem;
+    font-weight: 400;
+    font-size: 1rem;
 
   }
