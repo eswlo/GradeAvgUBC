@@ -45,10 +45,17 @@ interface CardProps {
   fetchedAvgGrades: AvgObj[];
 }
 
+interface DeptCount {
+  [key: string]: number;
+}
+
 const Card: React.FC<CardProps> = (props) => {
-  const [labelList, setLabelList] = useState<string[]>([]);
+  const [labelListForAvgs, setLabelListForAvgs] = useState<string[]>([]);
   // const [titleList, setTitleList] = useState<string[]>([]);
-  const [dataList, setDataList] = useState<number[]>([]);
+  const [dataListForAvgs, setDataListForAvgs] = useState<number[]>([]);
+  const [labelListForDeptCount, setLabelListForDeptCount] = useState<string[]>([]);
+  const [dataListForDeptCount, setDataListForDeptCount] = useState<number[]>([]);
+
   const backgroundColors: string[] = [];
   const borderColors: string[] = [];
 
@@ -60,19 +67,39 @@ const Card: React.FC<CardProps> = (props) => {
     // const newTitleList: string[] = props.fetchedAvgGrades.map(entry => entry.title);
     // const newDataList: number[] = props.fetchedAvgGrades.map((entry) => Number(entry.average));
 
-    const newLabelList: string[] = [];
+    const newLabelListforAvgs: string[] = [];
     // const newTitleList: string[] = [];
-    const newDataList: number[] = [];
+    const newDataListforAvgs: number[] = [];
+    const newDeptCount: DeptCount = {};
+    const newLabelListforDeptCount: string[] = [];
+    const newDataListforDeptCount: number[] = [];
 
     props.fetchedAvgGrades.forEach((entry) => {
-      newLabelList.push(entry.dept + String(entry.id));
+      newLabelListforAvgs.push(entry.dept + String(entry.id));
       // newTitleList.push(entry.title);
-      newDataList.push(Number(entry.average));
+      newDataListforAvgs.push(Number(entry.average));
+      
+      if (Object.prototype.hasOwnProperty.call(newDeptCount, entry.dept)) {
+        newDeptCount[entry.dept] +=1;
+      } else {
+        newDeptCount[entry.dept] = 1;
+      }
     });
 
-    setLabelList(newLabelList);
+    const reorderedNewDeptCount = Object.fromEntries(
+      Object.entries(newDeptCount).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+    );
+
+    for (const key in reorderedNewDeptCount) {
+      newLabelListforDeptCount.push(key.toUpperCase());
+      newDataListforDeptCount.push(reorderedNewDeptCount[key]);
+    }
+
+    setLabelListForAvgs(newLabelListforAvgs);
     // setTitleList(newTitleList);
-    setDataList(newDataList);
+    setDataListForAvgs(newDataListforAvgs);
+    setLabelListForDeptCount(newLabelListforDeptCount);
+    setDataListForDeptCount(newDataListforDeptCount);
   }, [props.fetchedAvgGrades]);
 
   //   console.log(props.fetchedAvgGrades);
@@ -82,12 +109,12 @@ const Card: React.FC<CardProps> = (props) => {
     borderColors.push(BORDER_COLORS[i % BORDER_COLORS.length]);
   }
 
-  const data = {
-    labels: labelList,
+  const dataForAvgs = {
+    labels: labelListForAvgs,
     datasets: [
       {
         label: "Grade Average",
-        data: dataList,
+        data: dataListForAvgs,
         backgroundColor: backgroundColors,
         borderColor: borderColors,
         borderWidth: 1,
@@ -95,7 +122,7 @@ const Card: React.FC<CardProps> = (props) => {
     ],
   };
 
-  const options = {
+  const optionsForAvgs  = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -107,14 +134,48 @@ const Card: React.FC<CardProps> = (props) => {
     },
   };
 
-  const makeChart = () => {
-    return getBarChartNoDonut();
+
+
+  const dataForDeptCount = {
+    labels: labelListForDeptCount,
+    datasets: [
+      {
+        label: "Number of Courses Offered",
+        data: dataListForDeptCount,
+        backgroundColor: backgroundColors,
+        borderColor: borderColors,
+        borderWidth: 1,
+      },
+    ],
   };
 
-  const getBarChartNoDonut = () => {
+  const optionsForDeptCount  = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          // Set the step size for the y-axis to ensure integer values
+          stepSize: 1,   // Adjust this value as necessary to control the spacing
+          precision: 0,  // Ensures the displayed value is rounded to an integer (no decimals)
+        },
+      },
+    },
+  };
+
+  const makeChartOfDeptCount = () => {
     return (
       <div className={styles.chartContainer}>
-        <Bar data={data} options={options} />
+        <Bar data={dataForDeptCount} options={optionsForDeptCount} />
+      </div>
+    );
+  };
+
+  const makeChartOfAvgs = () => {
+    return (
+      <div className={styles.chartContainer}>
+        <Bar data={dataForAvgs } options={optionsForAvgs} />
       </div>
     );
   };
@@ -162,7 +223,8 @@ const Card: React.FC<CardProps> = (props) => {
 
   return (
     <div className={styles.card}>
-      <div>{makeChart()}</div>
+      {/* <div>{makeChartOfAvgs()}</div> */}
+      <div>{makeChartOfDeptCount()}</div>
       <div className={styles.tableContainer}>{makeTable()}</div>
     </div>
   );
