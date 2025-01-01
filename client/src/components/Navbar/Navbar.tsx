@@ -14,6 +14,7 @@ export interface submitObj {
 interface NavbarProps {
   deptList: string[];
   yearList: string[];
+  collapseDeptMenu: number;
   handleSubmitFromNavbar: (arg: submitObj) => void;
 }
 
@@ -80,13 +81,20 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     }
   }, [isSelectAll]);
 
-  const showCheckboxes = () => {
+  useEffect(() => {
+    // Collapse the department dropdown menu when user clicks on other areas.
+    setIsExpanded(false);
+  }, [props.collapseDeptMenu]);
+
+  const showCheckboxes = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation(); // prevent propogation back to App's div onClick handler that close this dropdown menu
     // console.log(isExpanded);
     setIsExpanded((prevState) => !prevState);
   };
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
+    event.stopPropagation(); // prevent propogation back to App's div onClick handler that close this dropdown menu
     setCheckboxes((prevState) => ({
       ...prevState,
       [name]: checked,
@@ -115,10 +123,15 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const handleSelectAllChange = () => {
     setIsSelectAll((prevState) => !prevState);
   };
+  
+  const stopPropogation = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    // prevent propogation back to App's div onClick handler that close this dropdown menu
+    event.stopPropagation();
+  }
 
   const createDeptMenu = () => {
     return (
-      <div className={styles.multiselect}>
+      <div className={styles.multiselect} onClick={stopPropogation}>
         <div className={styles.selectBox} onClick={showCheckboxes}>
           <select className={styles.deptDropdownMenu}>
             <option>Department(s)</option>

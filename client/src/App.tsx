@@ -12,6 +12,7 @@ const App: React.FC = () => {
   const [yearList, setYearList] = useState<string[]>([]);
   const [fetchedAvgGrades, setFetchedAvgGrades] = useState<AvgObj[]>([]);
   const [avgListGroup, setAvgListGroup] = useState<AvgObj[][]>([]);
+  const [collapseDeptMenu, setCollapseDeptMenu] = useState<number>(1);
 
   // useEffect to check if server is connected and retrive the year range and dept lists first
   useEffect(() => {
@@ -75,11 +76,19 @@ const App: React.FC = () => {
     }
   };
 
+  const handleClick = () => {
+    // console.log("clicked");
+    console.log(collapseDeptMenu);
+    setCollapseDeptMenu((prevState) => prevState * -1);
+
+  }
+
   return (
-    <div className={styles.appContainer}>
+    <div className={styles.appContainer} onClick={handleClick}>
       <Navbar
         deptList={deptList}
         yearList={yearList}
+        collapseDeptMenu={collapseDeptMenu}
         handleSubmitFromNavbar={handleSubmitFromNavbar}
       />
       <Main avgListGroup={avgListGroup} />
