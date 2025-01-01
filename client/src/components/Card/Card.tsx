@@ -1,9 +1,11 @@
-import { Bar } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
+  LineElement,
+  PointElement,
   Title,
   Tooltip,
   Legend,
@@ -38,6 +40,8 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
@@ -114,7 +118,7 @@ const Card: React.FC<CardProps> = (props) => {
 
   useEffect(() => {
     console.log(clickedTD);
-    makeChartForOneCourseAvgs();
+    makeLineChartForOneCourseAvgs();
   }, [clickedTD])
 
 
@@ -184,25 +188,25 @@ const Card: React.FC<CardProps> = (props) => {
       {
         label: `Average of ${clickedTD}`,
         data: dataListForOneCourseAvg,
-        backgroundColor: backgroundColors,
-        borderColor: borderColors,
-        borderWidth: 1,
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0
       },
     ],
 
   }
 
-  const makeChartForOneCourseAvgs = () => {
-    console.log("in makeChartForOneCourseAvgs");
+  const makeLineChartForOneCourseAvgs = () => {
+    console.log("in makeLineChartForOneCourseAvgs");
     console.log(labelListForOneCourseAvgs);
     return (
       <div className={styles.chartContainer}>
-        <Bar data={dataForOneCoureAvgs} options={optionsForAvgs} />
+        <Line data={dataForOneCoureAvgs} options={optionsForAvgs} />
       </div>
     );
   }
 
-  const makeChartOfDeptCount = () => {
+  const makeBarChartOfDeptCount = () => {
     return (
       <div className={styles.chartContainer}>
         <Bar data={dataForDeptCount} options={optionsForDeptCount} />
@@ -210,7 +214,7 @@ const Card: React.FC<CardProps> = (props) => {
     );
   };
 
-  const makeChartOfAvgs = () => {
+  const makeBarChartOfAvgs = () => {
     return (
       <div className={styles.chartContainer}>
         <Bar data={dataForAvgs} options={optionsForAvgs} />
@@ -294,7 +298,7 @@ const Card: React.FC<CardProps> = (props) => {
 
   return (
     <div className={styles.card}>
-      <div>{makeChartForOneCourseAvgs()}</div>
+      <div>{makeLineChartForOneCourseAvgs()}</div>
       <div className={styles.tableContainer}>{makeTable()}</div>
     </div>
   );
