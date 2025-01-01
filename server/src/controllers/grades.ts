@@ -24,9 +24,11 @@ export async function getYears(req: Request, res: Response): Promise<void> {
   }
 }
 
-
-export async function getAvgHistByCourse(req: Request, res: Response): Promise<void> {
-  const { dept, id, title} = req.params;
+export async function getAvgHistByCourse(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  const { dept, id, title } = req.params;
   // console.log(id);
   try {
     const query = `
@@ -45,8 +47,14 @@ export async function getAvgHistByCourse(req: Request, res: Response): Promise<v
 }
 
 export async function getAvgs(req: Request, res: Response): Promise<void> {
-  const { deptList, levelList, yearStart, yearEnd, avgLowerBound, avgHigherBound } =
-    req.body;
+  const {
+    deptList,
+    levelList,
+    yearStart,
+    yearEnd,
+    avgLowerBound,
+    avgHigherBound,
+  } = req.body;
 
   try {
     if (!deptList || deptList.length === 0) {

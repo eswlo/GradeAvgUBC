@@ -59,21 +59,30 @@ export const fetchYearList = async (): Promise<string[]> => {
   }
 };
 
-export const fetchAvgHistByCourse = async (dept: string, id: number, title: string): Promise<AvgObj2[]> => {
+export const fetchAvgHistByCourse = async (
+  dept: string,
+  id: number,
+  title: string,
+): Promise<AvgObj2[]> => {
   try {
     const encodedTitle = encodeURIComponent(title);
-    const response = await fetch(`${URL}/api/v1/grades/averages/${dept}/${id}/${encodedTitle}`);
+    const response = await fetch(
+      `${URL}/api/v1/grades/averages/${dept}/${id}/${encodedTitle}`,
+    );
     if (response.status == StatusCodes.OK) {
       const dataResult: AvgObj2[] = (await response.json()).result;
       return dataResult;
     } else {
       const err = await response.json();
       console.log(err.error);
-      return Promise.reject(`Failed to fetch ${dept} ${id} grade averages. ${err.error}`);    }
+      return Promise.reject(
+        `Failed to fetch ${dept} ${id} grade averages. ${err.error}`,
+      );
+    }
   } catch (err) {
     return Promise.reject(err); // Reject with the caught error
   }
-}
+};
 
 export const fetchAvgGrades = async (
   objForSubmit: submitObj,

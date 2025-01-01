@@ -79,7 +79,7 @@ const App: React.FC = () => {
         yearList={yearList}
         handleSubmitFromNavbar={handleSubmitFromNavbar}
       />
-      <Main avgListGroup={avgListGroup}/>
+      <Main avgListGroup={avgListGroup} />
     </div>
   );
 };

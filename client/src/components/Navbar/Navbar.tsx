@@ -35,10 +35,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   useEffect(() => {
     const unReduced: CheckboxState[] = [];
     props.deptList.forEach((dept) => {
-      const checkboxState: CheckboxState = {[dept]: false};
+      const checkboxState: CheckboxState = { [dept]: false };
       unReduced.push(checkboxState);
     });
-    const reduced = unReduced.reduce((acc, obj) => ({ ...acc, ...obj }), {}) // Convert the array of objects to a single object
+    const reduced = unReduced.reduce((acc, obj) => ({ ...acc, ...obj }), {}); // Convert the array of objects to a single object
     setCheckboxes(reduced);
     console.log(reduced);
 
@@ -63,18 +63,18 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   useEffect(() => {
     if (isSelectAll) {
       setCheckboxes((prevState) => {
-        const updatedCheckboxes = {...prevState};
+        const updatedCheckboxes = { ...prevState };
         for (const key in updatedCheckboxes) {
           updatedCheckboxes[key] = true;
-        };
+        }
         return updatedCheckboxes;
       });
     } else {
       setCheckboxes((prevState) => {
-        const updatedCheckboxes = {...prevState};
+        const updatedCheckboxes = { ...prevState };
         for (const key in updatedCheckboxes) {
           updatedCheckboxes[key] = false;
-        };
+        }
         return updatedCheckboxes;
       });
     }
@@ -86,27 +86,27 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   };
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, checked} = event.target;
+    const { name, checked } = event.target;
     setCheckboxes((prevState) => ({
       ...prevState,
       [name]: checked,
     }));
-  }
+  };
 
   const createLabels = () => {
     return props.deptList.map((dept) => {
       return (
         <div key={dept}>
           <label htmlFor={dept}>
-            <input 
-              type="checkbox" 
+            <input
+              type="checkbox"
               id={dept}
               name={dept}
               checked={checkboxes[dept]}
               onChange={handleCheckboxChange}
-              />
+            />
             {dept}
-        </label>
+          </label>
         </div>
       );
     });
@@ -114,7 +114,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 
   const handleSelectAllChange = () => {
     setIsSelectAll((prevState) => !prevState);
-  }
+  };
 
   const createDeptMenu = () => {
     return (
@@ -128,13 +128,13 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         {isExpanded && (
           <div className={styles.checkboxes}>
             <label htmlFor="all">
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 id="all"
                 name="all"
                 checked={isSelectAll}
                 onChange={handleSelectAllChange}
-                />
+              />
               Select all
             </label>
             {createLabels()}
@@ -266,7 +266,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     try {
       isValidValuesForSubmit();
       const objForSubmit: submitObj = {
-        checkedDeptsForSubmit: checkedDeptList.map((dept) => dept.toLowerCase()),
+        checkedDeptsForSubmit: checkedDeptList.map((dept) =>
+          dept.toLowerCase(),
+        ),
         checkedLevelsForSubmit: courseLevelList.map((courseLevelStr) =>
           Number(courseLevelStr),
         ),
