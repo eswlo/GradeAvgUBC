@@ -24,6 +24,26 @@ export async function getYears(req: Request, res: Response): Promise<void> {
   }
 }
 
+
+export async function getAvgHistByCourse(req: Request, res: Response): Promise<void> {
+  const { dept, id, title} = req.params;
+  // console.log(id);
+  try {
+    const query = `
+    SELECT dept, id, year, title, ROUND(AVG(avg), 2) AS average
+    FROM ${process.env.PGTABLE_SECTIONS}
+    WHERE dept = $1 AND id = $2 AND title = $3
+    GROUP BY dept, id, year, title
+    ORDER BY year ASC;
+`;
+    const result = await pool.query(query, [dept, Number(id), title]);
+    res.status(StatusCodes.OK).json({ result: result.rows });
+  } catch (err) {
+    console.log("Error occurred in getAvgByCourse method:", { err });
+    res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+  }
+}
+
 export async function getAvgs(req: Request, res: Response): Promise<void> {
   const { deptList, levelList, yearStart, yearEnd, avgLowerBound, avgHigherBound } =
     req.body;
