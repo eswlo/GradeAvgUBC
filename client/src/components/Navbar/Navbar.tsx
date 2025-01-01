@@ -22,6 +22,10 @@ interface CheckboxState {
   [key: string]: boolean;
 }
 
+interface LabelState {
+  [key: string]: boolean;
+}
+
 const Navbar: React.FC<NavbarProps> = (props) => {
   const [checkedDeptList, setCheckedDeptList] = useState<string[]>([]);
   const [checkboxes, setCheckboxes] = useState<CheckboxState>({});
@@ -32,16 +36,27 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [avgLowerBound, setAvgLowerBound] = useState<string>("");
   const [avgHigherBound, setAvgHigherBound] = useState<string>("");
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [displayedLabels, setDisplayedLabels] = useState<LabelState>({});
 
   useEffect(() => {
-    const unReduced: CheckboxState[] = [];
+    const unReducedCheckboxes: CheckboxState[] = [];
     props.deptList.forEach((dept) => {
       const checkboxState: CheckboxState = { [dept]: false };
-      unReduced.push(checkboxState);
+      unReducedCheckboxes.push(checkboxState);
     });
-    const reduced = unReduced.reduce((acc, obj) => ({ ...acc, ...obj }), {}); // Convert the array of objects to a single object
-    setCheckboxes(reduced);
-    console.log(reduced);
+    const reducedCheckboxes = unReducedCheckboxes.reduce((acc, obj) => ({ ...acc, ...obj }), {}); // Convert the array of objects to a single object
+    setCheckboxes(reducedCheckboxes);
+    // console.log(reduced);
+
+    const unReducedDisplayedLabels: CheckboxState[] = [];
+    props.deptList.forEach((dept) => {
+      const labelState: LabelState = { [dept]: true };
+      unReducedDisplayedLabels.push(labelState);
+    });
+    const reducedDisplayedLabels = unReducedDisplayedLabels.reduce((acc, obj) => ({ ...acc, ...obj }), {}); // Convert the array of objects to a single object
+    setDisplayedLabels(reducedDisplayedLabels);
+    console.log(reducedDisplayedLabels);
 
     const yearListLen = props.yearList.length;
     if (yearListLen !== 0) {
@@ -104,6 +119,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const createLabels = () => {
     return props.deptList.map((dept) => {
       return (
+        displayedLabels[dept] && (
         <div key={dept}>
           <label htmlFor={dept}>
             <input
@@ -115,7 +131,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             />
             {dept}
           </label>
-        </div>
+        </div>)
       );
     });
   };
@@ -129,28 +145,88 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     event.stopPropagation();
   }
 
+  const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target) {
+      const { value } = event.target; // Destructure value from event target
+      setSearchInput(value);
+      const updatedDisplayedLabels: LabelState = {... displayedLabels};
+      if (value.length === 0) {
+        for (const key in updatedDisplayedLabels) {
+          if (Object.prototype.hasOwnProperty.call(updatedDisplayedLabels, key)) {
+            updatedDisplayedLabels[key] = true;
+          }
+        }
+      } else {
+        const userInput = value.toUpperCase();
+        props.deptList.forEach((dept) => {
+          if (dept.indexOf(userInput) > - 1) {
+            // found, do nothing
+          } else {
+            // not found, set to unshown
+            updatedDisplayedLabels[dept] = false;
+          }
+        });
+      }
+      console.log(updatedDisplayedLabels);
+      setDisplayedLabels(updatedDisplayedLabels);
+    }
+  };
+
+  const getDeptMenuDescription = () => {
+    if (isSelectAll) {
+      return `Selected (${checkedDeptList.length})`;
+    } else if (checkedDeptList.length === 0) {
+      return `Department(s)`;
+    } else if (checkedDeptList.length <= 3) {
+      let str = "";
+      checkedDeptList.forEach((dept) => {
+        if (str === "") {
+          str+=dept;
+        } else {
+          str = str + ", " + dept;
+        }
+      })
+      return str;
+    } else {
+      return `Selected (${checkedDeptList.length})`;
+    }
+  }
+
   const createDeptMenu = () => {
     return (
       <div className={styles.multiselect} onClick={stopPropogation}>
         <div className={styles.selectBox} onClick={showCheckboxes}>
           <select className={styles.deptDropdownMenu}>
-            <option>Department(s)</option>
+            <option>{getDeptMenuDescription()}</option>
           </select>
           <div className={styles.overSelect}></div>
         </div>
         {isExpanded && (
-          <div className={styles.checkboxes}>
-            <label htmlFor="all">
+          <div className={styles.deptDropDownContainer}>
+            <div className={styles.searchInputContainer}>
               <input
-                type="checkbox"
-                id="all"
-                name="all"
-                checked={isSelectAll}
-                onChange={handleSelectAllChange}
+                type="text"
+                id="searchInput"
+                placeholder="Search.."
+                className={styles.searchInputField}
+                name="searchInput"
+                value={searchInput}
+                onChange={handleSearchInput}
               />
-              Select all
-            </label>
-            {createLabels()}
+            </div>
+            <div className={styles.checkboxes}>
+              <label htmlFor="all">
+                <input
+                  type="checkbox"
+                  id="all"
+                  name="all"
+                  checked={isSelectAll}
+                  onChange={handleSelectAllChange}
+                />
+                Select all
+              </label>
+              {createLabels()}
+            </div>
           </div>
         )}
       </div>
@@ -300,6 +376,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       }
     }
   };
+
 
   return (
     <nav className={styles.navbar}>

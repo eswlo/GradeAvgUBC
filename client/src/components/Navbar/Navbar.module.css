@@ -50,25 +50,52 @@
     position: relative;
 }
 
-  .deptDropdownMenu {
+.deptDropdownMenu {
     width: 150px;
     font-size: 1rem;
     font-weight: 500;
     padding: 3px;
     border-radius: 5px;
     border: 1px dashed rgb(225, 223, 223);
-	cursor: pointer;  
-  }
+    cursor: pointer;  
+}
 
-  .overSelect {
+.overSelect {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-  }
+}
+
+.searchInputContainer {
+    width: 150px;
+    max-height: 350px; /* Set a maximum height */
+    position: absolute;
+    /* border: 1px solid black; */
+}
   
-  .checkboxes {
+.searchInputField {
+    /* box-sizing: border-box; */
+    background-image: url('../../assets/navbar/search.png');
+    background-size: 13% auto;
+    background-position: 8px 4px;
+    background-repeat: no-repeat;
+    font-size: 1rem;
+    padding-left: 35px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+
+.searchInputField :focus {
+    outline: 3px solid #ddd;
+}
+
+.checkboxes {
     width: 150px;
     max-height: 350px; /* Set a maximum height */
     display: flex;
@@ -78,24 +105,25 @@
     position: absolute;
     color: black;
     background-color: white;
+    margin-top: 30px;
     padding: 10px 10px;
     overflow: auto;
-  }
+}
   
-  .checkboxes label {
+.checkboxes label {
     padding: 5px 0px;
     display: block;
     margin-right: .5rem;
-  }
+}
 
-  .checkboxes label:hover {
+.checkboxes label:hover {
     background-color: #1e90ff;
-  }
+}
 
-  .checkboxes input {
+.checkboxes input {
     margin-right: .5rem;
-  }
-  
+}
+
 
 /* Course level container */
 .levelMenuContainer {
