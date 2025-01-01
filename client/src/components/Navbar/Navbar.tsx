@@ -159,6 +159,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target) {
       const { value } = event.target; // Destructure value from event target
+      // console.log(value);
       setSearchInput(value);
       const updatedDisplayedLabels: LabelState = { ...displayedLabels };
       if (value.length === 0) {
@@ -171,9 +172,11 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         }
       } else {
         const userInput = value.toUpperCase();
+        console.log(userInput);
         props.deptList.forEach((dept) => {
           if (dept.indexOf(userInput) > -1) {
-            // found, do nothing
+            // found, set to Shown
+            updatedDisplayedLabels[dept] = true;
           } else {
             // not found, set to unshown
             updatedDisplayedLabels[dept] = false;
