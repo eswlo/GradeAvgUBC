@@ -1,4 +1,5 @@
-import { Bar, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
+// import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -56,14 +57,14 @@ interface DeptCount {
 
 const Card: React.FC<CardProps> = (props) => {
   // const [titleList, setTitleList] = useState<string[]>([]);
-  const [labelListForAvgs, setLabelListForAvgs] = useState<string[]>([]);
-  const [dataListForAvgs, setDataListForAvgs] = useState<number[]>([]);
-  const [labelListForDeptCount, setLabelListForDeptCount] = useState<string[]>(
-    [],
-  );
-  const [dataListForDeptCount, setDataListForDeptCount] = useState<number[]>(
-    [],
-  );
+  // const [labelListForAvgs, setLabelListForAvgs] = useState<string[]>([]);
+  // const [dataListForAvgs, setDataListForAvgs] = useState<number[]>([]);
+  // const [labelListForDeptCount, setLabelListForDeptCount] = useState<string[]>(
+  //   [],
+  // );
+  // const [dataListForDeptCount, setDataListForDeptCount] = useState<number[]>(
+  //   [],
+  // );
   const [labelListForOneCourseAvgs, setlabelListForOneCourseAvgs] = useState<
     string[]
   >([]);
@@ -113,11 +114,11 @@ const Card: React.FC<CardProps> = (props) => {
       newDataListforDeptCount.push(reorderedNewDeptCount[key]);
     }
 
-    setLabelListForAvgs(newLabelListforAvgs);
+    // setLabelListForAvgs(newLabelListforAvgs);
     // setTitleList(newTitleList);
-    setDataListForAvgs(newDataListforAvgs);
-    setLabelListForDeptCount(newLabelListforDeptCount);
-    setDataListForDeptCount(newDataListforDeptCount);
+    // setDataListForAvgs(newDataListforAvgs);
+    // setLabelListForDeptCount(newLabelListforDeptCount);
+    // setDataListForDeptCount(newDataListforDeptCount);
 
     setClickedTD("");
     setlabelListForOneCourseAvgs([]);
@@ -136,18 +137,18 @@ const Card: React.FC<CardProps> = (props) => {
     borderColors.push(BORDER_COLORS[i % BORDER_COLORS.length]);
   }
 
-  const dataForAvgs = {
-    labels: labelListForAvgs,
-    datasets: [
-      {
-        label: "Grade Average",
-        data: dataListForAvgs,
-        backgroundColor: backgroundColors,
-        borderColor: borderColors,
-        borderWidth: 1,
-      },
-    ],
-  };
+  // const dataForAvgs = {
+  //   labels: labelListForAvgs,
+  //   datasets: [
+  //     {
+  //       label: "Grade Average",
+  //       data: dataListForAvgs,
+  //       backgroundColor: backgroundColors,
+  //       borderColor: borderColors,
+  //       borderWidth: 1,
+  //     },
+  //   ],
+  // };
 
   const optionsForAvgs = {
     responsive: true,
@@ -161,33 +162,33 @@ const Card: React.FC<CardProps> = (props) => {
     },
   };
 
-  const dataForDeptCount = {
-    labels: labelListForDeptCount,
-    datasets: [
-      {
-        label: "Number of Courses Offered",
-        data: dataListForDeptCount,
-        backgroundColor: backgroundColors,
-        borderColor: borderColors,
-        borderWidth: 1,
-      },
-    ],
-  };
+  // const dataForDeptCount = {
+  //   labels: labelListForDeptCount,
+  //   datasets: [
+  //     {
+  //       label: "Number of Courses Offered",
+  //       data: dataListForDeptCount,
+  //       backgroundColor: backgroundColors,
+  //       borderColor: borderColors,
+  //       borderWidth: 1,
+  //     },
+  //   ],
+  // };
 
-  const optionsForDeptCount = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          // Set the step size for the y-axis to ensure integer values
-          stepSize: 1, // Adjust this value as necessary to control the spacing
-          precision: 0, // Ensures the displayed value is rounded to an integer (no decimals)
-        },
-      },
-    },
-  };
+  // const optionsForDeptCount = {
+  //   responsive: true,
+  //   maintainAspectRatio: false,
+  //   scales: {
+  //     y: {
+  //       beginAtZero: true,
+  //       ticks: {
+  //         // Set the step size for the y-axis to ensure integer values
+  //         stepSize: 1, // Adjust this value as necessary to control the spacing
+  //         precision: 0, // Ensures the displayed value is rounded to an integer (no decimals)
+  //       },
+  //     },
+  //   },
+  // };
 
   const dataForOneCoureAvgs = {
     labels: labelListForOneCourseAvgs,
@@ -212,21 +213,21 @@ const Card: React.FC<CardProps> = (props) => {
     );
   };
 
-  const makeBarChartOfDeptCount = () => {
-    return (
-      <div className={styles.chartContainer}>
-        <Bar data={dataForDeptCount} options={optionsForDeptCount} />
-      </div>
-    );
-  };
+  // const makeBarChartOfDeptCount = () => {
+  //   return (
+  //     <div className={styles.chartContainer}>
+  //       <Bar data={dataForDeptCount} options={optionsForDeptCount} />
+  //     </div>
+  //   );
+  // };
 
-  const makeBarChartOfAvgs = () => {
-    return (
-      <div className={styles.chartContainer}>
-        <Bar data={dataForAvgs} options={optionsForAvgs} />
-      </div>
-    );
-  };
+  // const makeBarChartOfAvgs = () => {
+  //   return (
+  //     <div className={styles.chartContainer}>
+  //       <Bar data={dataForAvgs} options={optionsForAvgs} />
+  //     </div>
+  //   );
+  // };
 
   const handleTDClick = async (entry: AvgObj) => {
     try {

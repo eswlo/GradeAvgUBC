@@ -1,6 +1,6 @@
 import styles from "./Main.module.css";
 import Carousel from "../Carousel/Carousel";
-import Card from "../Card/Card";
+// import Card from "../Card/Card";
 import { AvgObj } from "../../api";
 
 interface MainProps {
