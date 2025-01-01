@@ -64,6 +64,9 @@ const App: React.FC = () => {
     try {
       const fetchedAvgs = await fetchAvgGrades(objForSubmit);
       // console.log(fetchedAvgGrades);
+      if (fetchedAvgs.length === 0) {
+        swalNormalAlert(`No results were found. Please try a different search term or filter.`);
+      }
       setFetchedAvgGrades(fetchedAvgs);
     } catch (err) {
       const errStr = err as string;
