@@ -106,6 +106,10 @@ const Card: React.FC<CardProps> = (props) => {
     setDataListForAvgs(newDataListforAvgs);
     setLabelListForDeptCount(newLabelListforDeptCount);
     setDataListForDeptCount(newDataListforDeptCount);
+
+    setClickedTD("");
+    setlabelListForOneCourseAvgs([]);
+    setDataListForOneCourseAvg([]);
   }, [props.fetchedAvgGrades]);
 
   useEffect(() => {
@@ -216,7 +220,7 @@ const Card: React.FC<CardProps> = (props) => {
 
   const handleTDClick = async (entry: AvgObj) => {
      try {
-       const fetchedAvgHistByCourse = await fetchAvgHistByCourse(entry.dept, entry.id, entry.title);
+       const fetchedAvgHistByCourse:AvgObj2[] = await fetchAvgHistByCourse(entry.dept, entry.id, entry.title);
       console.log(fetchedAvgHistByCourse);
       let i = fetchedAvgHistByCourse.length - 1;
       const newLabelListForOneCourseAvgs: string[] = [];
