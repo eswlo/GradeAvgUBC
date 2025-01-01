@@ -186,7 +186,7 @@ const Card: React.FC<CardProps> = (props) => {
     labels: labelListForOneCourseAvgs,
     datasets: [
       {
-        label: `Average of ${clickedTD}`,
+        label: `Average trend of ${clickedTD.toUpperCase()}`,
         data: dataListForOneCourseAvg,
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
