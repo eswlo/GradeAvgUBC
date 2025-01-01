@@ -9,8 +9,10 @@ import {
   Legend,
 } from "chart.js";
 import { useState, useEffect } from "react";
-import { AvgObj } from "../../api";
+import { AvgObj, AvgObj2, fetchAvgHistByCourse } from "../../api";
 import styles from "./Card.module.css";
+import { swalNormalAlert } from "../../utils";
+
 
 const BACKGROUND_COLORS = [
   "rgba(255, 99, 132, 0.2)",
@@ -50,11 +52,15 @@ interface DeptCount {
 }
 
 const Card: React.FC<CardProps> = (props) => {
+    // const [titleList, setTitleList] = useState<string[]>([]);
   const [labelListForAvgs, setLabelListForAvgs] = useState<string[]>([]);
-  // const [titleList, setTitleList] = useState<string[]>([]);
   const [dataListForAvgs, setDataListForAvgs] = useState<number[]>([]);
   const [labelListForDeptCount, setLabelListForDeptCount] = useState<string[]>([]);
   const [dataListForDeptCount, setDataListForDeptCount] = useState<number[]>([]);
+  const [labelListForOneCourseAvgs, setlabelListForOneCourseAvgs] = useState<string[]>([]);
+  const [dataListForOneCourseAvg, setDataListForOneCourseAvg] = useState<number[]>([]);
+  const [clickedTD, setClickedTD] = useState<string>("");
+
 
   const backgroundColors: string[] = [];
   const borderColors: string[] = [];
@@ -102,6 +108,12 @@ const Card: React.FC<CardProps> = (props) => {
     setDataListForDeptCount(newDataListforDeptCount);
   }, [props.fetchedAvgGrades]);
 
+  useEffect(() => {
+    console.log(clickedTD);
+    makeChartForOneCourseAvgs();
+  }, [clickedTD])
+
+
   //   console.log(props.fetchedAvgGrades);
 
   for (let i = 0; i < props.fetchedAvgGrades.length; i++) {
@@ -134,8 +146,6 @@ const Card: React.FC<CardProps> = (props) => {
     },
   };
 
-
-
   const dataForDeptCount = {
     labels: labelListForDeptCount,
     datasets: [
@@ -164,6 +174,30 @@ const Card: React.FC<CardProps> = (props) => {
     },
   };
 
+  const dataForOneCoureAvgs = {
+    labels: labelListForOneCourseAvgs,
+    datasets: [
+      {
+        label: `Average of ${clickedTD}`,
+        data: dataListForOneCourseAvg,
+        backgroundColor: backgroundColors,
+        borderColor: borderColors,
+        borderWidth: 1,
+      },
+    ],
+
+  }
+
+  const makeChartForOneCourseAvgs = () => {
+    console.log("in makeChartForOneCourseAvgs");
+    console.log(labelListForOneCourseAvgs);
+    return (
+      <div className={styles.chartContainer}>
+        <Bar data={dataForOneCoureAvgs} options={optionsForAvgs} />
+      </div>
+    );
+  }
+
   const makeChartOfDeptCount = () => {
     return (
       <div className={styles.chartContainer}>
@@ -175,18 +209,50 @@ const Card: React.FC<CardProps> = (props) => {
   const makeChartOfAvgs = () => {
     return (
       <div className={styles.chartContainer}>
-        <Bar data={dataForAvgs } options={optionsForAvgs} />
+        <Bar data={dataForAvgs} options={optionsForAvgs} />
       </div>
     );
   };
+
+  const handleTDClick = async (entry: AvgObj) => {
+     try {
+       const fetchedAvgHistByCourse = await fetchAvgHistByCourse(entry.dept, entry.id, entry.title);
+      console.log(fetchedAvgHistByCourse);
+      let i = fetchedAvgHistByCourse.length - 1;
+      const newLabelListForOneCourseAvgs: string[] = [];
+      const newDataListForOneCourseAvg: number[] = [];
+      let count = 0;
+      while (i > 0) {
+        if (count === 10) {
+          break;
+        } else {
+          if (fetchedAvgHistByCourse[i].year !== 1900) {
+            newLabelListForOneCourseAvgs.unshift(String(fetchedAvgHistByCourse[i].year));
+            newDataListForOneCourseAvg.unshift(Number(fetchedAvgHistByCourse[i].average));
+          }
+          i--;
+          count++;
+        }
+      };
+      console.log(newLabelListForOneCourseAvgs);
+      console.log(newDataListForOneCourseAvg);
+      setClickedTD(entry.dept.toUpperCase() + " " + String(entry.id) + " " + entry.title);
+      setlabelListForOneCourseAvgs(newLabelListForOneCourseAvgs);
+      setDataListForOneCourseAvg(newDataListForOneCourseAvg);
+     } catch (err) {
+       const errStr = err as string;
+       console.log(`errStr: ${errStr}`);
+       swalNormalAlert(errStr);
+     }
+  }
 
   const getTableBody = () => {
     if (props.fetchedAvgGrades.length !== 0) {
       return (
         <tbody>
           {props.fetchedAvgGrades.map((entry) => (
-            <tr key={entry.dept + String(entry.id)}>
-              <td>{entry.dept.toUpperCase() + " " + String(entry.id)}</td>
+            <tr key={entry.dept + String(entry.id) + entry.title}>
+              <td className={styles.tdForClick} onClick={() => handleTDClick(entry)}>{entry.dept.toUpperCase() + " " + String(entry.id)}</td>
               <td>{entry.title}</td>
               <td>{entry.average}</td>
             </tr>
@@ -216,15 +282,15 @@ const Card: React.FC<CardProps> = (props) => {
             </tr>
           </thead>
           {getTableBody()}
-        </table>
+        </table>  
+        <p className={styles.tableDescription}>* Click on subject code to view grade averages for the past 10 years.</p>
       </div>
     );
   };
 
   return (
     <div className={styles.card}>
-      {/* <div>{makeChartOfAvgs()}</div> */}
-      <div>{makeChartOfDeptCount()}</div>
+      <div>{makeChartForOneCourseAvgs()}</div>
       <div className={styles.tableContainer}>{makeTable()}</div>
     </div>
   );

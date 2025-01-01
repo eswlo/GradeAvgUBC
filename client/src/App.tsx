@@ -58,13 +58,13 @@ const App: React.FC = () => {
   };
 
   const handleSubmitFromNavbar = async (objForSubmit: submitObj) => {
-    console.log(`objForSubmit`);
-    console.log(objForSubmit);
+    // console.log(`objForSubmit`);
+    // console.log(objForSubmit);
 
     try {
-      const fetched = await fetchAvgGrades(objForSubmit);
+      const fetchedAvgs = await fetchAvgGrades(objForSubmit);
       // console.log(fetchedAvgGrades);
-      setFetchedAvgGrades(fetched);
+      setFetchedAvgGrades(fetchedAvgs);
     } catch (err) {
       const errStr = err as string;
       console.log(`errStr: ${errStr}`);
