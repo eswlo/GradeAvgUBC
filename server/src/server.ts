@@ -4,9 +4,11 @@ import app from "./app";
 import dotenv from "dotenv";
 
 export const start = () => {
-  try {
-    dotenv.config({ path: "../.env" }); //load the global .env at root directory
+  if (process.env.NODE_ENV !== "production") {
+    dotenv.config({ path: "../.env" }); // Load .env file in non-production environments
+  }
 
+  try {
     console.log("Starting application...");
 
     // Load environment variables

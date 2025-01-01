@@ -4,7 +4,10 @@ import cors from "cors";
 import * as GradesController from "./controllers/grades";
 import dotenv from "dotenv";
 
-dotenv.config({ path: "../.env" }); //load the global .env at root directory
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config({ path: "../.env" }); // Load .env file in non-production environments
+}
+
 const app: Application = express();
 
 // Middleware

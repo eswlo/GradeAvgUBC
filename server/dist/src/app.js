@@ -40,7 +40,9 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const GradesController = __importStar(require("./controllers/grades"));
 const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config({ path: "../.env" });
+if (process.env.NODE_ENV !== "production") {
+    dotenv_1.default.config({ path: "../.env" });
+}
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());

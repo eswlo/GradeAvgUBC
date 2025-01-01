@@ -7,8 +7,10 @@ exports.start = void 0;
 const app_1 = __importDefault(require("./app"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const start = () => {
-    try {
+    if (process.env.NODE_ENV !== "production") {
         dotenv_1.default.config({ path: "../.env" });
+    }
+    try {
         console.log("Starting application...");
         const port = process.env.SERVER_PORT || 3000;
         const server = app_1.default.listen(port, () => {

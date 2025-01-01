@@ -46,7 +46,8 @@
   "scripts": {
     "build": "tsc && npm run prettier:check && npm run lint:check",
     "test": "mocha --require ts-node/register --timeout 10000 --extension .spec.ts --recursive test",
-    "start": "nodemon src/server.ts",
+    "start": "node dist/src/server.js",
+    "dev": "nodemon src/server.ts",
     "lint:check": "eslint src test",
     "lint:fix": "eslint src test --fix",
     "prettier:check": "prettier src/**/*.ts test/**/*.ts --check",

@@ -65,7 +65,7 @@ describe("Test backend server api", () => {
             dept: "cpsc",
             id: 319,
             average: "84.52",
-        }
+        },
     ];
     beforeEach(function () {
         console.log("Starting a test...");

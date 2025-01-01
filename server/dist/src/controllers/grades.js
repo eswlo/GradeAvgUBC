@@ -63,7 +63,7 @@ function getAvgHistByCourse(req, res) {
 }
 function getAvgs(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { deptList, levelList, yearStart, yearEnd, avgLowerBound, avgHigherBound } = req.body;
+        const { deptList, levelList, yearStart, yearEnd, avgLowerBound, avgHigherBound, } = req.body;
         try {
             if (!deptList || deptList.length === 0) {
                 res
