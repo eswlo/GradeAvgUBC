@@ -3,6 +3,8 @@ import json
 import psycopg2
 import os
 from dotenv import load_dotenv
+from urllib.parse import urlparse
+
 
 def insert_section(section, cursor):
     try:
@@ -67,22 +69,38 @@ def parse_and_add_data(path, cursor):
                 if len(sections) != 0:
                     for section in sections:
                         try:
+                            # print("Inserting a section...")
                             insert_section(section, cursor)
+                            # print("Section inserted.")
                         except Exception as e:
                             print(f"Error occurred when processing section {section}: {str(e)}")
 def main():
-    load_dotenv(dotenv_path='../.env')
+    # print(os.getcwd())
     path = "archives/ubc-pair-2016.zip"
-    db_conn = psycopg2.connect(
-        database=os.getenv('PGDATABASE'), 
-        user=os.getenv('PGUSER'), 
-        password=os.getenv('PGPASSWORD'), 
+    load_dotenv(dotenv_path='../server/.env')
+    connection_string = ""
+    if (os.getenv("NODE_ENV") == "development"):
+        database=os.getenv("PGDATABASE")
+        username=os.getenv('PGUSER') 
+        password=os.getenv('PGPASSWORD') 
         host=os.getenv('PGHOST')
-        )
-    # print(os.getenv('PGDATABASE'))
+        print(database)
+        connection_string = f"dbname={database} user={username} password={password} host={host}"
+    else:
+        parsed_url = urlparse(os.getenv("PGRENDERURL"))
+        username = parsed_url.username
+        password = parsed_url.password
+        host = parsed_url.hostname
+        database = parsed_url.path.lstrip('/')  # Remove leading '/' from the database name
+        connection_string = f"dbname={database} user={username} password={password} host={host}"
+    print("connection_string:", connection_string)
+    db_conn = psycopg2.connect(connection_string)
     cursor = db_conn.cursor()
+    print("Creating table...")
     create_table(cursor)
+    print("Table created. On to add data...")
     parse_and_add_data(path, cursor)
+    print("Data added.")
     db_conn.commit()
     cursor.close()
     db_conn.close()

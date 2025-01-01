@@ -1,11 +1,15 @@
 import { Pool } from "pg";
 import dotenv from "dotenv";
 
-if (process.env.NODE_ENV !== "production") {
-  dotenv.config({ path: "../.env" }); // Load .env file in non-production environments
-}
+dotenv.config();
+// console.log(process.cwd());
 
-const connectionString = `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT || 5432}/${process.env.PGDATABASE}`;
+const connectionString =
+  process.env.NODE_ENV === "development"
+    ? `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT || 5432}/${process.env.PGDATABASE}`
+    : process.env.PGRENDERURL;
+
+console.log(connectionString);
 
 export const pool = new Pool({
   connectionString: connectionString,

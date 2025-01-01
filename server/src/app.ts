@@ -4,9 +4,7 @@ import cors from "cors";
 import * as GradesController from "./controllers/grades";
 import dotenv from "dotenv";
 
-if (process.env.NODE_ENV !== "production") {
-  dotenv.config({ path: "../.env" }); // Load .env file in non-production environments
-}
+dotenv.config();
 
 const app: Application = express();
 
