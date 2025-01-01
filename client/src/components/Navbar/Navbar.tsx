@@ -45,7 +45,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       const checkboxState: CheckboxState = { [dept]: false };
       unReducedCheckboxes.push(checkboxState);
     });
-    const reducedCheckboxes = unReducedCheckboxes.reduce((acc, obj) => ({ ...acc, ...obj }), {}); // Convert the array of objects to a single object
+    const reducedCheckboxes = unReducedCheckboxes.reduce(
+      (acc, obj) => ({ ...acc, ...obj }),
+      {},
+    ); // Convert the array of objects to a single object
     setCheckboxes(reducedCheckboxes);
     // console.log(reduced);
 
@@ -54,7 +57,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       const labelState: LabelState = { [dept]: true };
       unReducedDisplayedLabels.push(labelState);
     });
-    const reducedDisplayedLabels = unReducedDisplayedLabels.reduce((acc, obj) => ({ ...acc, ...obj }), {}); // Convert the array of objects to a single object
+    const reducedDisplayedLabels = unReducedDisplayedLabels.reduce(
+      (acc, obj) => ({ ...acc, ...obj }),
+      {},
+    ); // Convert the array of objects to a single object
     setDisplayedLabels(reducedDisplayedLabels);
     console.log(reducedDisplayedLabels);
 
@@ -101,7 +107,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     setIsExpanded(false);
   }, [props.collapseDeptMenu]);
 
-  const showCheckboxes = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const showCheckboxes = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
     event.stopPropagation(); // prevent propogation back to App's div onClick handler that close this dropdown menu
     // console.log(isExpanded);
     setIsExpanded((prevState) => !prevState);
@@ -120,18 +128,19 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     return props.deptList.map((dept) => {
       return (
         displayedLabels[dept] && (
-        <div key={dept}>
-          <label htmlFor={dept}>
-            <input
-              type="checkbox"
-              id={dept}
-              name={dept}
-              checked={checkboxes[dept]}
-              onChange={handleCheckboxChange}
-            />
-            {dept}
-          </label>
-        </div>)
+          <div key={dept}>
+            <label htmlFor={dept}>
+              <input
+                type="checkbox"
+                id={dept}
+                name={dept}
+                checked={checkboxes[dept]}
+                onChange={handleCheckboxChange}
+              />
+              {dept}
+            </label>
+          </div>
+        )
       );
     });
   };
@@ -139,27 +148,31 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const handleSelectAllChange = () => {
     setIsSelectAll((prevState) => !prevState);
   };
-  
-  const stopPropogation = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+
+  const stopPropogation = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
     // prevent propogation back to App's div onClick handler that close this dropdown menu
     event.stopPropagation();
-  }
+  };
 
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target) {
       const { value } = event.target; // Destructure value from event target
       setSearchInput(value);
-      const updatedDisplayedLabels: LabelState = {... displayedLabels};
+      const updatedDisplayedLabels: LabelState = { ...displayedLabels };
       if (value.length === 0) {
         for (const key in updatedDisplayedLabels) {
-          if (Object.prototype.hasOwnProperty.call(updatedDisplayedLabels, key)) {
+          if (
+            Object.prototype.hasOwnProperty.call(updatedDisplayedLabels, key)
+          ) {
             updatedDisplayedLabels[key] = true;
           }
         }
       } else {
         const userInput = value.toUpperCase();
         props.deptList.forEach((dept) => {
-          if (dept.indexOf(userInput) > - 1) {
+          if (dept.indexOf(userInput) > -1) {
             // found, do nothing
           } else {
             // not found, set to unshown
@@ -181,16 +194,16 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       let str = "";
       checkedDeptList.forEach((dept) => {
         if (str === "") {
-          str+=dept;
+          str += dept;
         } else {
           str = str + ", " + dept;
         }
-      })
+      });
       return str;
     } else {
       return `Selected (${checkedDeptList.length})`;
     }
-  }
+  };
 
   const createDeptMenu = () => {
     return (
@@ -376,7 +389,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       }
     }
   };
-
 
   return (
     <nav className={styles.navbar}>

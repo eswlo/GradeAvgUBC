@@ -66,7 +66,9 @@ const App: React.FC = () => {
       const fetchedAvgs = await fetchAvgGrades(objForSubmit);
       // console.log(fetchedAvgGrades);
       if (fetchedAvgs.length === 0) {
-        swalNormalAlert(`No results were found. Please try a different search term or filter.`);
+        swalNormalAlert(
+          `No results were found. Please try a different search term or filter.`,
+        );
       }
       setFetchedAvgGrades(fetchedAvgs);
     } catch (err) {
@@ -80,8 +82,7 @@ const App: React.FC = () => {
     // console.log("clicked");
     console.log(collapseDeptMenu);
     setCollapseDeptMenu((prevState) => prevState * -1);
-
-  }
+  };
 
   return (
     <div className={styles.appContainer} onClick={handleClick}>
