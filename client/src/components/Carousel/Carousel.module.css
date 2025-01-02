@@ -11,6 +11,17 @@
 }
 
 .pagination {
-    margin-top: 450px;
-    z-index: 1000;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    /* padding-top: 5px; */
+    z-index: 100;
+    border: 1px, solid, darkgray;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
   }
+.pagination p {
+    /* border: 1px solid black; */
+    margin-top: 5px;
+    font-size: 1rem;
+    font-weight: 360;
+}
