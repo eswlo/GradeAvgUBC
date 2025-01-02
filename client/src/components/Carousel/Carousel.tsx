@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import styles from "./Carousel.module.css";
 
 import { AvgObj } from "../../api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface CarouselProps {
   avgListGroup: AvgObj[][];
@@ -50,7 +50,7 @@ const Carousel: React.FC<CarouselProps> = (props) => {
           </div>
         ))}
       </Slider>
-      {pagination()}
+      {props.avgListGroup.length > 0 && pagination()}
     </div>
   );
 };
