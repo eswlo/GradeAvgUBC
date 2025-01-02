@@ -11,24 +11,28 @@ interface CarouselProps {
 }
 
 const Carousel: React.FC<CarouselProps> = (props) => {
+  const totalSlideCount = props.avgListGroup.length;
+  const hideDotsShowPagination: boolean = totalSlideCount > 30;
   const settings = {
-    dots: props.avgListGroup.length > 30 ? false : true,
+    dots: hideDotsShowPagination ? false : true,
     infinite: false,
     speed: 800,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
 
+  
   return (
     <div className={styles.sliderContainer}>
       <Slider {...settings}>
         {props.avgListGroup.map((list, index) => (
           <div key={index} className={styles.slide}>
-            <Card fetchedAvgGrades={list} />
+            <Card fetchedAvgGrades={list}/>
           </div>
         ))}
       </Slider>
     </div>
+    
   );
 };
 

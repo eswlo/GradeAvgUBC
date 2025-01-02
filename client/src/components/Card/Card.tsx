@@ -72,7 +72,6 @@ const Card: React.FC<CardProps> = (props) => {
     number[]
   >([]);
   const [clickedTD, setClickedTD] = useState<string>("");
-
   const backgroundColors: string[] = [];
   const borderColors: string[] = [];
 
@@ -154,10 +153,14 @@ const Card: React.FC<CardProps> = (props) => {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
+      x: {
+        ticks: { color: "#002145" },
+      },
       y: {
         beginAtZero: true,
         min: 0.0,
         max: 100.0,
+        ticks: { color: "#002145" },
       },
     },
   };
@@ -197,15 +200,16 @@ const Card: React.FC<CardProps> = (props) => {
         label: `Average trend of ${clickedTD.toUpperCase()}`,
         data: dataListForOneCourseAvg,
         fill: false,
-        borderColor: "rgb(75, 192, 192)",
+        borderColor: "rgb(106, 90, 205, 0.5)",
         tension: 0,
+        backgroundColor: "#002145",
       },
     ],
   };
 
   const makeLineChartForOneCourseAvgs = () => {
-    console.log("in makeLineChartForOneCourseAvgs");
-    console.log(labelListForOneCourseAvgs);
+    // console.log("in makeLineChartForOneCourseAvgs");
+    // console.log(labelListForOneCourseAvgs);
     return (
       <div className={styles.chartContainer}>
         <Line data={dataForOneCoureAvgs} options={optionsForAvgs} />
@@ -323,7 +327,7 @@ const Card: React.FC<CardProps> = (props) => {
   return (
     <div className={styles.card}>
       <div>{makeLineChartForOneCourseAvgs()}</div>
-      <div className={styles.tableContainer}>{makeTable()}</div>
+      <div className={styles.tableContainer}>{makeTable()}</div>      
     </div>
   );
 };

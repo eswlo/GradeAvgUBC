@@ -9,3 +9,8 @@
 .slide {
     height: 450px;
 }
+
+.pagination {
+    margin-top: 450px;
+    z-index: 1000;
+  }

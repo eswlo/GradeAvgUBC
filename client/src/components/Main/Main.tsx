@@ -15,20 +15,20 @@ const Main: React.FC<MainProps> = (props) => {
   return (
     <main className={styles.main}>
       <div className={styles.mainContainer}>
-      {props.dataLoaded ? (
-        <Carousel avgListGroup={props.avgListGroup} />
-      ) : (
-        <div className={styles.spinnerContainer}>
-          {
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          }
-          <span className={styles.spannerMsg}>
-            Loading Data...Please wait...
-          </span>
-        </div>
-      )}
+        {props.dataLoaded ? (
+          <Carousel avgListGroup={props.avgListGroup} />
+        ) : (
+          <div className={styles.spinnerContainer}>
+            {
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            }
+            <span className={styles.spannerMsg}>
+              Loading Data...Please wait...
+            </span>
+          </div>
+        )}
       </div>
     </main>
   );
