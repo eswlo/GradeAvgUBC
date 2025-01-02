@@ -13,8 +13,8 @@ interface MainProps {
 const Main: React.FC<MainProps> = (props) => {
   // console.log(`props.dataLoaded: ${props.dataLoaded}`);
   return (
-    <div className={styles.wrapper}>
     <main className={styles.main}>
+      <div className={styles.mainContainer}>
       {props.dataLoaded ? (
         <Carousel avgListGroup={props.avgListGroup} />
       ) : (
@@ -29,8 +29,8 @@ const Main: React.FC<MainProps> = (props) => {
           </span>
         </div>
       )}
+      </div>
     </main>
-    </div>
   );
 };
 

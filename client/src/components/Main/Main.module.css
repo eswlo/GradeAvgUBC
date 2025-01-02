@@ -1,20 +1,29 @@
 .main {
+  position: relative;
+  margin-top: 150px;
+  flex-grow: 1;
+  width: 100%;
+  height: 100%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainContainer {
     background-image: url('../../assets/main/ubc-fountain-g.jpg');
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat; 
     background-attachment: fixed;
-    min-height: 100vh;/* use min-height to ensure the all main area is covered by the background image*/
-    position: relative;
-    margin-top: 150px;
-    /* margin-bottom:10px; */
+    min-width: 100vw;
+    min-height: 100%;
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* overflow: auto; */
   }
 
-.main::after {
+.mainContainer::after {
     content: '';                                   
     position: absolute;                           
     top: 0;

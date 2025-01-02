@@ -1,7 +1,7 @@
 .appContainer {
     display: flex;
     flex-direction: column; /* Stacks the children vertically */
-    min-height: 100vh; /* Full viewport height */
+    height: 100vh; /* Full viewport height */
 
     
     /* background-image: url('./assets/main/ubc-fountain-g.jpg');
