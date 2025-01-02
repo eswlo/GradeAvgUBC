@@ -1,8 +1,8 @@
 import { StatusCodes } from "http-status-codes";
 import { submitObj } from "./components/Navbar/Navbar";
 
-const URL = `http://localhost:3000`;
-// const URL = `https://gradeavgubcserver.onrender.com`;
+// const URL = `http://localhost:3000`;
+const URL = `https://gradeavgubcserver.onrender.com`;
 
 type DeptObj = {
   dept: string;

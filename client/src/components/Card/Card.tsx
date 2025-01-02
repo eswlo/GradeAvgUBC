@@ -327,7 +327,7 @@ const Card: React.FC<CardProps> = (props) => {
   return (
     <div className={styles.card}>
       <div>{makeLineChartForOneCourseAvgs()}</div>
-      <div className={styles.tableContainer}>{makeTable()}</div>      
+      <div className={styles.tableContainer}>{makeTable()}</div>
     </div>
   );
 };

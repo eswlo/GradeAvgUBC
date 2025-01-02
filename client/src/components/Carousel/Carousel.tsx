@@ -30,29 +30,28 @@ const Carousel: React.FC<CarouselProps> = (props) => {
         <div className={styles.pagination}>
           <p>{`slide ${currentSlideNumber} of ${totalSlideCount}`}</p>
         </div>
-      )
+      );
     } else {
-      return (
-        <div className={styles.pagination}>
-        </div>
-      )
+      return <div className={styles.pagination}></div>;
     }
   };
 
-
-  
   return (
     <div className={styles.sliderContainer}>
-      <Slider {...settings} beforeChange={(_: number, nextSlide: number) => setCurrentSlideNumber(nextSlide+1)}>
+      <Slider
+        {...settings}
+        beforeChange={(_: number, nextSlide: number) =>
+          setCurrentSlideNumber(nextSlide + 1)
+        }
+      >
         {props.avgListGroup.map((list, index) => (
           <div key={index} className={styles.slide}>
-            <Card fetchedAvgGrades={list}/>
+            <Card fetchedAvgGrades={list} />
           </div>
         ))}
       </Slider>
-      {pagination()} 
+      {pagination()}
     </div>
-
   );
 };
 
