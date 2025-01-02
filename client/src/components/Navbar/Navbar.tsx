@@ -427,7 +427,11 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           </div>
         </div>
         <div className={styles.submitContainer}>
-          <button className={styles.submitBtn} onClick={handleSubmit}>
+          <button
+            className={styles.submitBtn}
+            onClick={handleSubmit}
+            disabled={props.deptList.length === 0 ? true : false}
+          >
             Submit
           </button>
         </div>

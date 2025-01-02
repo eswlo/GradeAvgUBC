@@ -26,3 +26,27 @@
       z-index: 1;                                  
   }
 
+.spinnerContainer {
+  position: absolute;                           
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;    
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(
+    circle, /* Shape of the gradient */
+    rgba(0, 33, 69, 0.3), /* center */
+    rgba(0, 33, 69, 0.8)  /* corners */
+  );    
+  z-index: 100;
+}
+
+.spannerMsg {
+  padding: 10px 0px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: white;
+}

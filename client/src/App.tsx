@@ -13,9 +13,11 @@ const App: React.FC = () => {
   const [fetchedAvgGrades, setFetchedAvgGrades] = useState<AvgObj[]>([]);
   const [avgListGroup, setAvgListGroup] = useState<AvgObj[][]>([]);
   const [collapseDeptMenu, setCollapseDeptMenu] = useState<number>(1);
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false);
 
   // useEffect to check if server is connected and retrive the year range and dept lists first
   useEffect(() => {
+    // console.log(`dataLoaded: ${dataLoaded}`);
     const setUp = async () => {
       try {
         const fetchedDeptList = await fetchDeptList();
@@ -25,6 +27,7 @@ const App: React.FC = () => {
         const fetchedYearList = await fetchYearList();
         // console.log(fetchedYearList);
         setYearList(fetchedYearList);
+        setDataLoaded(true);
       } catch (err) {
         console.log(err);
         swalNormalAlert("Failed to retrieve data. Server may be down.");
@@ -92,7 +95,7 @@ const App: React.FC = () => {
         collapseDeptMenu={collapseDeptMenu}
         handleSubmitFromNavbar={handleSubmitFromNavbar}
       />
-      <Main avgListGroup={avgListGroup} />
+      <Main avgListGroup={avgListGroup} dataLoaded={dataLoaded} />
     </div>
   );
 };
