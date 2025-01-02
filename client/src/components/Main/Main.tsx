@@ -13,6 +13,7 @@ interface MainProps {
 const Main: React.FC<MainProps> = (props) => {
   // console.log(`props.dataLoaded: ${props.dataLoaded}`);
   return (
+    <div className={styles.wrapper}>
     <main className={styles.main}>
       {props.dataLoaded ? (
         <Carousel avgListGroup={props.avgListGroup} />
@@ -23,10 +24,13 @@ const Main: React.FC<MainProps> = (props) => {
               <span className="visually-hidden">Loading...</span>
             </Spinner>
           }
-          <span className={styles.spannerMsg}>Loading Data...Please wait...</span>
+          <span className={styles.spannerMsg}>
+            Loading Data...Please wait...
+          </span>
         </div>
       )}
     </main>
+    </div>
   );
 };
 
