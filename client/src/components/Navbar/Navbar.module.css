@@ -7,7 +7,7 @@
     justify-content: space-between;
     align-items: center;
     background: linear-gradient(to right, #002145, #002145);
-    width: 100vw;
+    width: 100%;
     height: 150px;
     z-index: 1000; /* Ensure navbar stays on top */
 }
@@ -15,6 +15,7 @@
 .textContainer {
     height: 100%;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     color: #fff;
@@ -40,6 +41,13 @@
     border: 3px solid white;
     background-color: white;
     color: black;
+}
+
+.dropdownContainer {
+    flex: 4;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
 }
 
 /* Dept Menu */
@@ -258,3 +266,37 @@
     /* border-color: #d3d3d3;  */
     /* cursor: not-allowed; */
   }
+
+
+
+@media (max-width: 1280px) {
+    .dropdownContainer {
+        display: flex;
+        flex-direction: column;
+        flex: 2;
+        border-right: 1px solid #002145;
+
+    }
+
+    .levelMenuContainer {
+        border-left: none;
+        border-right: none;
+    }
+
+    .inputContainer {
+        flex: 4;
+    }
+
+
+    .submitContainer {
+        flex: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .textContainer {
+        display: flex;
+        flex-direction: column;
+        font-size: 1rem;
+    }
+}

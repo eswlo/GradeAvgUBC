@@ -25,3 +25,17 @@
     font-size: 1rem;
     font-weight: 360;
 }
+
+
+@media (max-width: 1080px) {
+    .sliderContainer {
+        height: 100%;
+        padding-top: 350px;
+        padding-bottom: 20px;
+    }
+    .slide {
+        width: auto;
+        height: auto;
+    }
+
+}

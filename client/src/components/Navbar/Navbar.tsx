@@ -396,11 +396,15 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.textContainer}>
-        <h1>GradeAvgUBC</h1>
+        <h1>Grade</h1>
+        <h1>Avg</h1>
+        <h1>UBC</h1>
       </div>
       <div className={styles.selectContainer}>
+        <div className={styles.dropdownContainer}>
         <div className={styles.deptsMenuContainer}>{createDeptMenu()}</div>
         <div className={styles.levelMenuContainer}>{createLevelMenu()}</div>
+        </div>
         <div className={styles.inputContainer}>
           <div className={styles.yearRangeContainer}>{createYearMenus()}</div>
           <div className={styles.avgBoundContainer}>
