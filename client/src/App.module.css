@@ -3,6 +3,7 @@
     flex-direction: column; /* Stacks the children vertically */
     height: 100vh; /* Full viewport height */
     overflow-y: auto;
+    
 
     
     /* background-image: url('./assets/main/ubc-fountain-g.jpg');
@@ -10,4 +11,11 @@
     background-position: center; 
     background-repeat: no-repeat; 
     background-attachment: fixed; */
+  }
+
+  @media (max-width: 480px) {
+    .appContainer {
+      min-width: 350px;
+      /* max-width: 480px; */
+    }
   }

@@ -3,8 +3,8 @@
     border-radius: 5px;
     background: radial-gradient(
         circle, /* Shape of the gradient */
-        rgba(255, 255, 255, 0.8), /* center */
-        rgba(255, 255, 255, 0.65)  /* corners */
+        rgba(255, 255, 255, 0.9), /* center */
+        rgba(255, 255, 255, 0.75)  /* corners */
       );      
     position: relative; /* Ensure the container can be layered above the main background */
     z-index: 3; /* Placing it above the background */
@@ -31,7 +31,7 @@
     position: absolute;
     width: 400px;
     max-width: 400px;
-    top: 70px;
+    top: 50px;
     right: 30px; 
 }
 
@@ -44,7 +44,7 @@ table {
   table th, table td {
     padding: 8px 3px;
     text-align: center;
-    border: 1px solid #b6b6b6;
+    /* border: 1px solid #b6b6b6; */
   }
   
   table th {
@@ -62,7 +62,7 @@ table {
 
   }
 
-  .tableDescription {
+  .tableNote {
     margin-top: 10px;
     font-weight: 400;
     font-size: 0.85rem;
@@ -108,3 +108,20 @@ table {
 
  }
 
+
+ @media (max-width: 480px) {
+  .tableContainer {
+    max-width: 400px;  
+    min-width: 320px;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    padding-left: 0px;
+  }
+
+  .chartContainer {
+    max-width: 400px;  
+    min-width: 320px;
+    margin-bottom: 20px;
+    margin-top: 50px;
+  }
+}

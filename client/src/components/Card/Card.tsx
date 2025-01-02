@@ -317,7 +317,7 @@ const Card: React.FC<CardProps> = (props) => {
           </thead>
           {getTableBody()}
         </table>
-        <p className={styles.tableDescription}>
+        <p className={styles.tableNote}>
           * Click on subject code to view grade averages for the past 10 years.
         </p>
       </div>

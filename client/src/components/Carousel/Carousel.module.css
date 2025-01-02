@@ -37,5 +37,11 @@
         width: auto;
         height: auto;
     }
-
 }
+
+@media (max-width: 480px) {
+    .sliderContainer {
+        min-width: 320px;
+        max-width: 480px;  
+    }
+  }

@@ -5,6 +5,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-html {
+html, body{
   scroll-behavior: smooth;
+  min-width: 430px;
 }
