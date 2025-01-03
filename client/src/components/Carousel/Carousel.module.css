@@ -51,9 +51,4 @@
         min-width: 320px;
         max-width: 480px;  
     }
-
-    #root > div > main > div > div > div.slick-slider.slick-initialized > div > div { 
-        height: 0px;
-    }
-
   }

@@ -276,19 +276,32 @@ const Card: React.FC<CardProps> = (props) => {
   };
 
   const getTableBody = () => {
-    if (props.fetchedAvgGrades.length !== 0) {
+    const entryArray: AvgObj[] = [...props.fetchedAvgGrades];
+    if (entryArray.length !== 0) {
+      // Keey the table entry count to be 7 so that card size remains, otherwise
+      // there may be a gap between the card/slide and the dots/pageNumber
+      let emptyCount = 7 - entryArray.length;
+      while (emptyCount > 0) {
+        entryArray.push({
+          dept: "n/a",
+          id: emptyCount,
+          title: "n/a",
+          average: "n/a"
+        });
+        emptyCount = emptyCount - 1;
+      }
       return (
         <tbody>
-          {props.fetchedAvgGrades.map((entry) => (
+          {entryArray.map((entry) => (
             <tr key={entry.dept + String(entry.id) + entry.title}>
               <td
-                className={styles.tdForClick}
-                onClick={() => handleTDClick(entry)}
+                className={entry.dept !== 'n/a' ? styles.withPointerClick : styles.noPointerClick}
+                {...(entry.dept !== 'n/a' ? { onClick: () => handleTDClick(entry) } : {})}
               >
-                {entry.dept.toUpperCase() + " " + String(entry.id)}
+                {(entry.dept !== "n/a" ? entry.dept.toUpperCase() + " " + String(entry.id) : "N/A")}
               </td>
-              <td>{entry.title}</td>
-              <td>{entry.average}</td>
+              <td>{(entry.dept !== "n/a" ? entry.title : "")}</td>
+              <td>{(entry.dept !== "n/a" ? entry.average : "")}</td>
             </tr>
           ))}
         </tbody>
