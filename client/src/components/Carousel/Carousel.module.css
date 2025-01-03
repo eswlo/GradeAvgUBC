@@ -1,7 +1,7 @@
 .sliderContainer {
     z-index: 2; /* Placing it above the background */
-    width: 950px;
-    height: 550px;
+    width: 80%;
+    height: 100%;
     padding-top: 30px;
     padding-left: 0px;
 }
@@ -29,8 +29,8 @@
 
 @media (max-width: 1080px) {
     .sliderContainer {
-        height: 100%;
-        padding-top: 350px;
+        width: 90%;
+        /* padding-top: 350px; */
         padding-bottom: 20px;
     }
     .slide {
@@ -39,9 +39,21 @@
     }
 }
 
+@media (max-width: 768px) {
+    .sliderContainer {
+        padding-top: 300px;
+    }
+  }
+
 @media (max-width: 480px) {
     .sliderContainer {
+        padding-top: 420px;
         min-width: 320px;
         max-width: 480px;  
     }
+
+    #root > div > main > div > div > div.slick-slider.slick-initialized > div > div { 
+        height: 0px;
+    }
+
   }

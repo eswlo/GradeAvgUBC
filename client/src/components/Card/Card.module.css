@@ -11,6 +11,7 @@
     width: 100%;
     height: 100%;
     display: flex; /* Grid container */
+    flex-direction: row;
     justify-content: center; /* Centers horizontally inside each grid item */
     align-items: center; /* Centers vertically inside each grid item */
 }
@@ -20,17 +21,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 450px;
+    /* width: 450px; */
+    width: 45%;
     height: 320px;
     top: 50px;
     left: 20px;
+    transition: min-width 0.2s ease; 
 }
 
 
 .tableContainer {
     position: absolute;
-    width: 400px;
-    max-width: 400px;
+    width: 45%;
     top: 50px;
     right: 30px; 
 }
@@ -80,15 +82,18 @@ table {
       flex-direction: column;
       align-items: center;  /* Center children horizontally */    
       justify-content: center; 
+      margin-top: 450px;
     }
 
     .tableContainer {
       top: 0;
+      left: 0;
       position: relative; 
-      min-width: 700px;  
-      margin-bottom: 20px;
+      max-width: none;
+      width: 80%;
       margin-top: 50px;
-      padding-left: 50px;
+      margin-bottom: 20px;
+
     }
 
     table {
@@ -100,16 +105,53 @@ table {
     .chartContainer {
       top: 0;
       left: 0;
+      width: 80%;
       position: relative; 
-      min-width: 650px;  
       margin-bottom: 20px;
       margin-top: 50px;
     }
-
  }
 
 
+ @media (max-width: 768px) {
+  .card {
+    margin-top: 200px;
+  }
+  .tableContainer {
+    margin-bottom: 20px;
+    margin-top: 50px;
+    /* padding-left: 50px; */
+  }
+
+  table {
+    border-collapse: collapse;
+    margin-top: 0px;
+  }
+  
+  .chartContainer {
+    top: 0;
+    left: 0;
+    position: relative; 
+    /* min-width: 421px; */
+    margin-bottom: 20px;
+    margin-top: 50px;
+  }
+}
+
+
+@media (max-width: 620px) { 
+  .card {
+    margin-top: 450px;
+  }
+}
+
+
  @media (max-width: 480px) {
+
+  .card {
+    margin-top: 450px;
+  }
+
   .tableContainer {
     max-width: 400px;  
     min-width: 320px;
@@ -119,8 +161,9 @@ table {
   }
 
   .chartContainer {
-    max-width: 400px;  
+    max-width: none;  
     min-width: 320px;
+    width: auto;
     margin-bottom: 20px;
     margin-top: 50px;
   }
