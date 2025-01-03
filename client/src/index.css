@@ -9,10 +9,3 @@ html, body{
   scroll-behavior: smooth;
   min-width: 430px;
 }
-
-  /* directly modify React Slick sliders hieght when the screen size is <= 480px */
-/* @media (max-width: 480px) {
-  #root > div > main > div > div > div.slick-slider.slick-initialized > div > div {
-    height: 1100px;  
-  }
-} */

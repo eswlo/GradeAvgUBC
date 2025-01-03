@@ -14,7 +14,7 @@ interface CarouselProps {
 const Carousel: React.FC<CarouselProps> = (props) => {
   const [currentSlideNumber, setCurrentSlideNumber] = useState<number>(1);
   const totalSlideCount = props.avgListGroup.length;
-  const hideDotsShowPagination: boolean = totalSlideCount > 30;
+  const hideDotsShowPagination: boolean = totalSlideCount > 12;
   const settings = {
     dots: hideDotsShowPagination ? false : true,
     infinite: false,
