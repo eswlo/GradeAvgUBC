@@ -376,6 +376,10 @@
         border: none;
     }
 
+    .deptsMenuContainer {
+        margin-right: 10px;
+    }
+
     .inputContainer {
         border: none;
         margin: 10px 0px;
@@ -408,4 +412,7 @@
         border-radius: 0px;
     }
 
+    .dropdownContainer, .inputContainer, .submitContainer {
+        min-width: 300px;
+    }
   }
