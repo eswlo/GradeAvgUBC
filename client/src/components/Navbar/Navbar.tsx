@@ -402,8 +402,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       </div>
       <div className={styles.selectContainer}>
         <div className={styles.dropdownContainer}>
-        <div className={styles.deptsMenuContainer}>{createDeptMenu()}</div>
-        <div className={styles.levelMenuContainer}>{createLevelMenu()}</div>
+          <div className={styles.deptsMenuContainer}>{createDeptMenu()}</div>
+          <div className={styles.levelMenuContainer}>{createLevelMenu()}</div>
         </div>
         <div className={styles.inputContainer}>
           <div className={styles.yearRangeContainer}>{createYearMenus()}</div>

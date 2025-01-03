@@ -41,7 +41,6 @@ const App: React.FC = () => {
     groupAvgLists();
   }, [fetchedAvgGrades]);
 
-
   const groupAvgLists = () => {
     const newListGroup: AvgObj[][] = [];
     const listForProcess = [...fetchedAvgGrades];

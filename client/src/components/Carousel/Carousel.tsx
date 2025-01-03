@@ -38,7 +38,8 @@ const Carousel: React.FC<CarouselProps> = (props) => {
 
   return (
     <div className={styles.sliderContainer}>
-      <Slider className={styles.customSliderCSS}
+      <Slider
+        className={styles.customSliderCSS}
         {...settings}
         beforeChange={(_: number, nextSlide: number) =>
           setCurrentSlideNumber(nextSlide + 1)
