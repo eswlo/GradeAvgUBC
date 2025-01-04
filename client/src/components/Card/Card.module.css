@@ -33,6 +33,7 @@
 .tableContainer {
     position: absolute;
     width: 45%;
+    max-height: 386px;
     top: 50px;
     right: 30px; 
 }
@@ -147,11 +148,14 @@ table {
   .card {
     margin-top: 450px;
   }
+
+  .tableContainer {
+    
+  }
 }
 
 
  @media (max-width: 480px) {
-
   .card {
     margin-top: 450px;
   }
