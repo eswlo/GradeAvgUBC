@@ -309,13 +309,6 @@
         justify-content: center;
         align-items: center;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-    } {
-        height: 250px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     }
 
     .textContainer {
@@ -413,7 +406,7 @@
 }
 
 @media (max-width: 480px) {
-    .navbarBeforeSideContainer, .navbarBehindSideContainer {
+    .navbarBeforeSideContainer, .navbarBehindSideContainer  {
         min-width: 350px;
         max-width: 480px;  
     }
