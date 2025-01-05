@@ -1,8 +1,9 @@
 .main {
   position: relative;
-  margin-top: 150px;
+    /*if navbar position is fixed, set margin-top and make the main height 100vh to takes the entire space of app container*/ 
+  /* margin-top: 150px; */
+  height: 100%; 
   width: 100%;
-  height: 100vh; /*navbar position is fixed, so the main here takes the entire space of app container*/ 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,21 +72,16 @@
 } */
 
 
-/* @media (max-width: 1080px) {
+/* @media (max-width: 620px) {
   .main {
-    margin-top: 200px;
+    margin-bottom: 200px;
   }
-}
-
-@media (max-width: 620px) {
-  .main {
-    margin-top: 650px;
-  }
-} */
+}  */
 
 @media (max-width: 480px) {
   .main {
     min-width: 350px;
     max-width: 480px;
+    margin-bottom: 50px;
   }
 }

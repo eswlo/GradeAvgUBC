@@ -286,7 +286,7 @@ const Card: React.FC<CardProps> = (props) => {
           dept: "n/a",
           id: emptyCount,
           title: "n/a",
-          average: "n/a"
+          average: "n/a",
         });
         emptyCount = emptyCount - 1;
       }
@@ -295,13 +295,21 @@ const Card: React.FC<CardProps> = (props) => {
           {entryArray.map((entry) => (
             <tr key={entry.dept + String(entry.id) + entry.title}>
               <td
-                className={entry.dept !== 'n/a' ? styles.withPointerClick : styles.noPointerClick}
-                {...(entry.dept !== 'n/a' ? { onClick: () => handleTDClick(entry) } : {})}
+                className={
+                  entry.dept !== "n/a"
+                    ? styles.withPointerClick
+                    : styles.noPointerClick
+                }
+                {...(entry.dept !== "n/a"
+                  ? { onClick: () => handleTDClick(entry) }
+                  : {})}
               >
-                {(entry.dept !== "n/a" ? entry.dept.toUpperCase() + " " + String(entry.id) : "N/A")}
+                {entry.dept !== "n/a"
+                  ? entry.dept.toUpperCase() + " " + String(entry.id)
+                  : "N/A"}
               </td>
-              <td>{(entry.dept !== "n/a" ? entry.title : "")}</td>
-              <td>{(entry.dept !== "n/a" ? entry.average : "")}</td>
+              <td>{entry.dept !== "n/a" ? entry.title : ""}</td>
+              <td>{entry.dept !== "n/a" ? entry.average : ""}</td>
             </tr>
           ))}
         </tbody>

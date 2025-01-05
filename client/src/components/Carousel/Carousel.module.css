@@ -45,9 +45,15 @@
     }
   }
 
+  @media (max-width: 620px) {
+    .sliderContainer {
+        padding-top: 200px;
+    }
+  }
+
 @media (max-width: 480px) {
     .sliderContainer {
-        padding-top: 420px;
+        /* padding-top: 420px; */
         min-width: 320px;
         max-width: 480px;  
     }

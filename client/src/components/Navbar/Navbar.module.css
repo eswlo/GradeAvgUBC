@@ -1,13 +1,13 @@
 .navbar {
-    position: fixed;
-    top: 0;
+    /* position: fixed; */
+    /* top: 0;
     left: 0;
-    right: 0;
+    right: 0; */
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: linear-gradient(to right, #002145, #002145);
-    width: 100%;
+    /* width: 100%; */
     height: 150px;
     z-index: 1000; /* Ensure navbar stays on top */
 }
@@ -19,8 +19,7 @@
     justify-content: center;
     align-items: center;
     color: #fff;
-    margin-left: 50px;
-    padding: 20px 0px;
+    padding-left: 50px;
 }
 
 .textContainer h1 {
@@ -28,8 +27,8 @@
 }
 
 .selectContainer {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    /* margin-top: 10px;
+    margin-bottom: 10px; */
     margin-right: 50px;
     width: 63%;
     height: 55%;
@@ -297,16 +296,17 @@
 
 @media (max-width: 1080px) {
     .navbar {
-        height: 200px;
+        height: 250px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     }
 
     .textContainer {
         width: 100%;
+        height: 100px;
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
@@ -325,7 +325,7 @@
 
 @media (max-width: 768px) {
     .navbar {
-        height: 200px;
+        /* height: 200px; */
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -333,7 +333,6 @@
     }
 
     .textContainer {
-        flex: 1;
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -341,9 +340,7 @@
     }
 
     .selectContainer {
-        flex: 1;
         width: 100%;
-        height: 100%;
         display: flex;
         flex-direction: row;
         margin-top: 0px;
@@ -360,9 +357,15 @@
 
 @media (max-width: 620px) {
     .navbar {
-        height: 320px;
+        height: 520px;
     }
+
+    .textContainer {
+        flex: 2;
+    }
+
     .selectContainer {
+        flex: 3;
         display: flex;
         flex-direction: column;
         height: 100%;
