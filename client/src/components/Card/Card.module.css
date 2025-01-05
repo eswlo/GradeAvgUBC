@@ -16,26 +16,12 @@
     align-items: center; /* Centers vertically inside each grid item */
 }
 
-.chartContainer {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* width: 450px; */
-    width: 45%;
-    height: 320px;
-    top: 50px;
-    left: 20px;
-    transition: min-width 0.2s ease; 
-}
-
-
 .tableContainer {
     position: absolute;
-    width: 45%;
+    width: 80%;
     max-height: 386px;
-    top: 50px;
-    right: 30px; 
+    /* top: 50px; */
+    /* right: 30px;  */
 }
 
 table {
@@ -83,11 +69,7 @@ table {
 
   @media (max-width: 1080px) {
     .card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;  /* Center children horizontally */    
-      justify-content: center; 
-      margin-top: 450px;
+      margin-top: 100px;
     }
 
     .tableContainer {
@@ -98,7 +80,6 @@ table {
       width: 80%;
       margin-top: 50px;
       margin-bottom: 20px;
-
     }
 
     table {
@@ -119,9 +100,6 @@ table {
 
 
  @media (max-width: 768px) {
-  .card {
-    margin-top: 200px;
-  }
   .tableContainer {
     margin-bottom: 20px;
     margin-top: 50px;
@@ -144,28 +122,28 @@ table {
 }
 
 
-@media (max-width: 620px) { 
-  .card {
-    margin-top: 450px;
-  }
+ @media (max-width: 620px) { 
+  /* .card {
+    margin-bottom: 50px;
+  } */
 
-  .tableContainer {
-    
+  .tableNote {
+    font-size: 0.75rem;
   }
-}
+} 
 
 
  @media (max-width: 480px) {
-  .card {
-    margin-top: 450px;
-  }
-
   .tableContainer {
     max-width: 400px;  
     min-width: 320px;
     margin-bottom: 20px;
     margin-top: 50px;
     padding-left: 0px;
+  }
+
+  .tableNote {
+    font-size: 0.65rem;
   }
 
   .chartContainer {

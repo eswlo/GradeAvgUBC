@@ -102,8 +102,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     }
   }, [isSelectAll]);
 
+  // Collapse the department dropdown menu when user clicks on other areas.
   useEffect(() => {
-    // Collapse the department dropdown menu when user clicks on other areas.
     setIsExpanded(false);
   }, [props.collapseDeptMenu]);
 

@@ -5,7 +5,9 @@ import "slick-carousel/slick/slick-theme.css";
 import styles from "./Carousel.module.css";
 
 import { AvgObj } from "../../api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Modal from "../Modal/Modal";
+
 
 interface CarouselProps {
   avgListGroup: AvgObj[][];
@@ -13,6 +15,10 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = (props) => {
   const [currentSlideNumber, setCurrentSlideNumber] = useState<number>(1);
+  const [clickedTDAvgObj, setClickedTDAvgObj] = useState<AvgObj | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+
   const totalSlideCount = props.avgListGroup.length;
   const hideDotsShowPagination: boolean = totalSlideCount > 12;
   const settings = {
@@ -22,6 +28,18 @@ const Carousel: React.FC<CarouselProps> = (props) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
+  useEffect(() => {
+    if (showModal) {
+        document.body.classList.add('active-modal');
+      } else {
+        document.body.classList.remove('active-modal');
+      }
+      // Cleanup function to remove the class when the component unmounts or modal is closed
+      return () => {
+        document.body.classList.remove('active-modal');
+      };
+}, [showModal]);
 
   const pagination = () => {
     // console.log(`currentSlideNumber: ${currentSlideNumber}`);
@@ -36,6 +54,18 @@ const Carousel: React.FC<CarouselProps> = (props) => {
     }
   };
 
+  const handleTDClick = (td: AvgObj) => {
+    console.log(`td: ${td}`);
+    setClickedTDAvgObj(td);
+    setShowModal(true);
+  }
+
+  const closeModal = () => {
+    console.log("close modal");
+    setClickedTDAvgObj(null);
+    setShowModal(false);
+}
+
   return (
     <div className={styles.sliderContainer}>
       <Slider
@@ -47,11 +77,12 @@ const Carousel: React.FC<CarouselProps> = (props) => {
       >
         {props.avgListGroup.map((list, index) => (
           <div key={index} className={styles.slide}>
-            <Card fetchedAvgGrades={list} />
+            <Card fetchedAvgGrades={list} handleTDClick={handleTDClick}/>
           </div>
         ))}
       </Slider>
       {props.avgListGroup.length > 0 && pagination()}
+      {showModal && <Modal clickedTDAvgObj={clickedTDAvgObj} closeModal={closeModal}/>}
     </div>
   );
 };
