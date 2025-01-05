@@ -6,6 +6,8 @@ import styles from "./Carousel.module.css";
 
 import { AvgObj } from "../../api";
 import { useState } from "react";
+import Modal from "../Modal/Modal";
+
 
 interface CarouselProps {
   avgListGroup: AvgObj[][];
@@ -13,6 +15,9 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = (props) => {
   const [currentSlideNumber, setCurrentSlideNumber] = useState<number>(1);
+  const [clickedTD, setClickedTD] = useState<string>("");
+
+
   const totalSlideCount = props.avgListGroup.length;
   const hideDotsShowPagination: boolean = totalSlideCount > 12;
   const settings = {
@@ -36,6 +41,10 @@ const Carousel: React.FC<CarouselProps> = (props) => {
     }
   };
 
+  const handleTDClick = (td: string) => {
+    setClickedTD(td);
+  }
+
   return (
     <div className={styles.sliderContainer}>
       <Slider
@@ -47,11 +56,12 @@ const Carousel: React.FC<CarouselProps> = (props) => {
       >
         {props.avgListGroup.map((list, index) => (
           <div key={index} className={styles.slide}>
-            <Card fetchedAvgGrades={list} />
+            <Card fetchedAvgGrades={list} handleTDClick={handleTDClick}/>
           </div>
         ))}
       </Slider>
       {props.avgListGroup.length > 0 && pagination()}
+      <Modal clickedTD={clickedTD} />
     </div>
   );
 };

@@ -49,6 +49,7 @@ ChartJS.register(
 
 interface CardProps {
   fetchedAvgGrades: AvgObj[];
+  handleTDClick: (arg: string) => void;
 }
 
 interface DeptCount {
@@ -233,47 +234,48 @@ const Card: React.FC<CardProps> = (props) => {
   //   );
   // };
 
-  const handleTDClick = async (entry: AvgObj) => {
-    try {
-      const fetchedAvgHistByCourse: AvgObj2[] = await fetchAvgHistByCourse(
-        entry.dept,
-        entry.id,
-        entry.title,
-      );
-      console.log(fetchedAvgHistByCourse);
-      let i = fetchedAvgHistByCourse.length - 1;
-      const newLabelListForOneCourseAvgs: string[] = [];
-      const newDataListForOneCourseAvg: number[] = [];
-      let count = 0;
-      while (i > 0) {
-        if (count === 10) {
-          break;
-        } else {
-          if (fetchedAvgHistByCourse[i].year !== 1900) {
-            newLabelListForOneCourseAvgs.unshift(
-              String(fetchedAvgHistByCourse[i].year),
-            );
-            newDataListForOneCourseAvg.unshift(
-              Number(fetchedAvgHistByCourse[i].average),
-            );
-          }
-          i--;
-          count++;
-        }
-      }
-      console.log(newLabelListForOneCourseAvgs);
-      console.log(newDataListForOneCourseAvg);
-      setClickedTD(
-        entry.dept.toUpperCase() + " " + String(entry.id) + " " + entry.title,
-      );
-      setlabelListForOneCourseAvgs(newLabelListForOneCourseAvgs);
-      setDataListForOneCourseAvg(newDataListForOneCourseAvg);
-    } catch (err) {
-      const errStr = err as string;
-      console.log(`errStr: ${errStr}`);
-      swalNormalAlert(errStr);
-    }
-  };
+
+  // const handleTDClick = async (entry: AvgObj) => {
+  //   try {
+  //     const fetchedAvgHistByCourse: AvgObj2[] = await fetchAvgHistByCourse(
+  //       entry.dept,
+  //       entry.id,
+  //       entry.title,
+  //     );
+  //     console.log(fetchedAvgHistByCourse);
+  //     let i = fetchedAvgHistByCourse.length - 1;
+  //     const newLabelListForOneCourseAvgs: string[] = [];
+  //     const newDataListForOneCourseAvg: number[] = [];
+  //     let count = 0;
+  //     while (i > 0) {
+  //       if (count === 10) {
+  //         break;
+  //       } else {
+  //         if (fetchedAvgHistByCourse[i].year !== 1900) {
+  //           newLabelListForOneCourseAvgs.unshift(
+  //             String(fetchedAvgHistByCourse[i].year),
+  //           );
+  //           newDataListForOneCourseAvg.unshift(
+  //             Number(fetchedAvgHistByCourse[i].average),
+  //           );
+  //         }
+  //         i--;
+  //         count++;
+  //       }
+  //     }
+  //     console.log(newLabelListForOneCourseAvgs);
+  //     console.log(newDataListForOneCourseAvg);
+  //     setClickedTD(
+  //       entry.dept.toUpperCase() + " " + String(entry.id) + " " + entry.title,
+  //     );
+  //     setlabelListForOneCourseAvgs(newLabelListForOneCourseAvgs);
+  //     setDataListForOneCourseAvg(newDataListForOneCourseAvg);
+  //   } catch (err) {
+  //     const errStr = err as string;
+  //     console.log(`errStr: ${errStr}`);
+  //     swalNormalAlert(errStr);
+  //   }
+  // };
 
   const getTableBody = () => {
     const entryArray: AvgObj[] = [...props.fetchedAvgGrades];
@@ -301,7 +303,7 @@ const Card: React.FC<CardProps> = (props) => {
                     : styles.noPointerClick
                 }
                 {...(entry.dept !== "n/a"
-                  ? { onClick: () => handleTDClick(entry) }
+                  ? { onClick: () => props.handleTDClick(entry.dept + String(entry.id) + entry.title)}
                   : {})}
               >
                 {entry.dept !== "n/a"
@@ -348,7 +350,6 @@ const Card: React.FC<CardProps> = (props) => {
   return (
     <div className={styles.card}>
       <div className={styles.tableContainer}>{makeTable()}</div>
-      {makeLineChartForOneCourseAvgs()}
     </div>
   );
 };
