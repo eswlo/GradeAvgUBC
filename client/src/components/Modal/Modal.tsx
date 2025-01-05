@@ -3,7 +3,7 @@ import { AvgObj, AvgObj2, fetchAvgHistByCourse } from "../../api";
 import styles from "./Modal.module.css";
 import { swalNormalAlert } from "../../utils";
 import { Line } from "react-chartjs-2";
-import { FaTimes } from 'react-icons/fa'; 
+import { FaTimes } from "react-icons/fa";
 
 // import { Bar } from "react-chartjs-2";
 import {
@@ -30,75 +30,74 @@ ChartJS.register(
 );
 
 interface ModalProps {
-clickedTDAvgObj: AvgObj | null;
+  clickedTDAvgObj: AvgObj | null;
   closeModal: () => void;
 }
 
+const Modal: React.FC<ModalProps> = (props) => {
+  const [clickedTDString, setClickedTDString] = useState<string>("");
+  const [labelListForOneCourseAvgs, setLabelListForOneCourseAvgs] = useState<
+    string[]
+  >([]);
+  const [dataListForOneCourseAvg, setDataListForOneCourseAvg] = useState<
+    number[]
+  >([]);
 
-const Modal: React.FC<ModalProps> = (props) => {    
-    const [clickedTDString, setClickedTDString] = useState<string>("");
-      const [labelListForOneCourseAvgs, setLabelListForOneCourseAvgs] = useState<
-        string[]
-      >([]);
-      const [dataListForOneCourseAvg, setDataListForOneCourseAvg] = useState<
-        number[]
-      >([]);
-
-
-    const callFetchAvgHistByCourse = async () => {
-        if (props.clickedTDAvgObj) {
-        try {
-            const fetchedAvgHistByCourse: AvgObj2[] = await fetchAvgHistByCourse(
-              props.clickedTDAvgObj.dept,
-              props.clickedTDAvgObj.id,
-              props.clickedTDAvgObj.title,
-            );
-            console.log(fetchedAvgHistByCourse);
-            let i = fetchedAvgHistByCourse.length - 1;
-            const newLabelListForOneCourseAvgs: string[] = [];
-            const newDataListForOneCourseAvg: number[] = [];
-            let count = 0;
-            while (i > 0) {
-              if (count === 10) {
-                break;
-              } else {
-                if (fetchedAvgHistByCourse[i].year !== 1900) {
-                  newLabelListForOneCourseAvgs.unshift(
-                    String(fetchedAvgHistByCourse[i].year),
-                  );
-                  newDataListForOneCourseAvg.unshift(
-                    Number(fetchedAvgHistByCourse[i].average),
-                  );
-                }
-                i--;
-                count++;
-              }
+  const callFetchAvgHistByCourse = async () => {
+    if (props.clickedTDAvgObj) {
+      try {
+        const fetchedAvgHistByCourse: AvgObj2[] = await fetchAvgHistByCourse(
+          props.clickedTDAvgObj.dept,
+          props.clickedTDAvgObj.id,
+          props.clickedTDAvgObj.title,
+        );
+        console.log(fetchedAvgHistByCourse);
+        let i = fetchedAvgHistByCourse.length - 1;
+        const newLabelListForOneCourseAvgs: string[] = [];
+        const newDataListForOneCourseAvg: number[] = [];
+        let count = 0;
+        while (i > 0) {
+          if (count === 10) {
+            break;
+          } else {
+            if (fetchedAvgHistByCourse[i].year !== 1900) {
+              newLabelListForOneCourseAvgs.unshift(
+                String(fetchedAvgHistByCourse[i].year),
+              );
+              newDataListForOneCourseAvg.unshift(
+                Number(fetchedAvgHistByCourse[i].average),
+              );
             }
-            console.log(newLabelListForOneCourseAvgs);
-            console.log(newDataListForOneCourseAvg);
-            setClickedTDString(
-                props.clickedTDAvgObj.dept.toUpperCase() + " " + String(props.clickedTDAvgObj.id) + " " + props.clickedTDAvgObj.title,
-            );
-            setLabelListForOneCourseAvgs(newLabelListForOneCourseAvgs);
-            setDataListForOneCourseAvg(newDataListForOneCourseAvg);
-          } catch (err) {
-            const errStr = err as string;
-            console.log(`errStr: ${errStr}`);
-            swalNormalAlert(errStr);
+            i--;
+            count++;
           }
         }
-    };
+        console.log(newLabelListForOneCourseAvgs);
+        console.log(newDataListForOneCourseAvg);
+        setClickedTDString(
+          props.clickedTDAvgObj.dept.toUpperCase() +
+            " " +
+            String(props.clickedTDAvgObj.id) +
+            " " +
+            props.clickedTDAvgObj.title,
+        );
+        setLabelListForOneCourseAvgs(newLabelListForOneCourseAvgs);
+        setDataListForOneCourseAvg(newDataListForOneCourseAvg);
+      } catch (err) {
+        const errStr = err as string;
+        console.log(`errStr: ${errStr}`);
+        swalNormalAlert(errStr);
+      }
+    }
+  };
 
+  useEffect(() => {
+    callFetchAvgHistByCourse();
+  }, [props.clickedTDAvgObj]);
 
-    useEffect(() => {
-        callFetchAvgHistByCourse();
-      }, [props.clickedTDAvgObj]);
-
-
-      useEffect(() => {
-        makeLineChartForOneCourseAvgs();
-      }, [dataListForOneCourseAvg])
-
+  useEffect(() => {
+    makeLineChartForOneCourseAvgs();
+  }, [dataListForOneCourseAvg]);
 
   const optionsForAvgs = {
     responsive: true,
@@ -140,16 +139,14 @@ const Modal: React.FC<ModalProps> = (props) => {
     );
   };
 
-    return (
-        <div className={styles.modalContainer}>
-            <button
-                className={styles.submitBtn}
-                onClick={props.closeModal}>
-            <FaTimes size={24} />
-            </button>
-            {makeLineChartForOneCourseAvgs()}
-        </div> 
-    )
-}
+  return (
+    <div className={styles.modalContainer}>
+      <button className={styles.submitBtn} onClick={props.closeModal}>
+        <FaTimes size={24} />
+      </button>
+      {makeLineChartForOneCourseAvgs()}
+    </div>
+  );
+};
 
 export default Modal;

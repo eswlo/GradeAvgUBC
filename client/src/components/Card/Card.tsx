@@ -7,9 +7,7 @@ interface CardProps {
   handleTDClick: (arg: AvgObj) => void;
 }
 
-
 const Card: React.FC<CardProps> = (props) => {
-
   const getTableBody = () => {
     const entryArray: AvgObj[] = [...props.fetchedAvgGrades];
     if (entryArray.length !== 0) {
@@ -28,7 +26,7 @@ const Card: React.FC<CardProps> = (props) => {
       return (
         <tbody>
           {entryArray.map((entry) => (
-            <tr 
+            <tr
               key={entry.dept + String(entry.id) + entry.title}
               className={
                 entry.dept !== "n/a"
@@ -36,8 +34,9 @@ const Card: React.FC<CardProps> = (props) => {
                   : styles.noPointerClick
               }
               {...(entry.dept !== "n/a"
-                ? { onClick: () => props.handleTDClick(entry)}
-                : {})}>
+                ? { onClick: () => props.handleTDClick(entry) }
+                : {})}
+            >
               <td>
                 {entry.dept !== "n/a"
                   ? entry.dept.toUpperCase() + " " + String(entry.id)
@@ -74,7 +73,8 @@ const Card: React.FC<CardProps> = (props) => {
           {getTableBody()}
         </table>
         <p className={styles.tableNote}>
-          * Click on a course entry to view its grade averages for the past 10 years.
+          * Click on a course entry to view its grade averages for the past 10
+          years.
         </p>
       </div>
     );
