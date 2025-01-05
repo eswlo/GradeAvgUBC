@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import styles from "./Carousel.module.css";
 
 import { AvgObj } from "../../api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "../Modal/Modal";
 
 
@@ -16,6 +16,7 @@ interface CarouselProps {
 const Carousel: React.FC<CarouselProps> = (props) => {
   const [currentSlideNumber, setCurrentSlideNumber] = useState<number>(1);
   const [clickedTD, setClickedTD] = useState<string>("");
+  const [showModal, setShowModal] = useState<boolean>(false);
 
 
   const totalSlideCount = props.avgListGroup.length;
@@ -27,6 +28,18 @@ const Carousel: React.FC<CarouselProps> = (props) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
+  useEffect(() => {
+    if (showModal) {
+        document.body.classList.add('active-modal');
+      } else {
+        document.body.classList.remove('active-modal');
+      }
+      // Cleanup function to remove the class when the component unmounts or modal is closed
+      return () => {
+        document.body.classList.remove('active-modal');
+      };
+}, [showModal]);
 
   const pagination = () => {
     // console.log(`currentSlideNumber: ${currentSlideNumber}`);
@@ -42,8 +55,16 @@ const Carousel: React.FC<CarouselProps> = (props) => {
   };
 
   const handleTDClick = (td: string) => {
+    console.log(`td: ${td}`);
     setClickedTD(td);
+    setShowModal(true);
   }
+
+  const closeModal = () => {
+    console.log("close modal");
+    setClickedTD("");
+    setShowModal(false);
+}
 
   return (
     <div className={styles.sliderContainer}>
@@ -61,7 +82,7 @@ const Carousel: React.FC<CarouselProps> = (props) => {
         ))}
       </Slider>
       {props.avgListGroup.length > 0 && pagination()}
-      <Modal clickedTD={clickedTD} />
+      <Modal clickedTD={clickedTD} showModal={showModal} closeModal={closeModal}/>
     </div>
   );
 };
