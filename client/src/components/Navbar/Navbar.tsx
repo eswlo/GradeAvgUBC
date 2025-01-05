@@ -395,7 +395,13 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   };
 
   return (
-    <nav className={props.navbarbehind ? styles.navbarBehindSideContainer : styles.navbarBeforeSideContainer}>
+    <nav
+      className={
+        props.navbarbehind
+          ? styles.navbarBehindSideContainer
+          : styles.navbarBeforeSideContainer
+      }
+    >
       <div className={styles.textContainer}>
         <h1>Grade</h1>
         <h1>Avg</h1>

@@ -16,7 +16,6 @@ const App: React.FC = () => {
   const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const [navbarbehind, setNavbarBehind] = useState<boolean>(false);
 
-
   // useEffect to check if server is connected and retrive the year range and dept lists first
   useEffect(() => {
     // console.log(`dataLoaded: ${dataLoaded}`);
@@ -91,7 +90,7 @@ const App: React.FC = () => {
 
   const alterNavBarIndexZ = () => {
     setNavbarBehind((prevState) => !prevState);
-  }
+  };
 
   return (
     <div className={styles.appContainer} onClick={handleClick}>
@@ -102,7 +101,11 @@ const App: React.FC = () => {
         navbarbehind={navbarbehind}
         handleSubmitFromNavbar={handleSubmitFromNavbar}
       />
-      <Main avgListGroup={avgListGroup} dataLoaded={dataLoaded} alterNavBarIndexZ={alterNavBarIndexZ}/>
+      <Main
+        avgListGroup={avgListGroup}
+        dataLoaded={dataLoaded}
+        alterNavBarIndexZ={alterNavBarIndexZ}
+      />
     </div>
   );
 };

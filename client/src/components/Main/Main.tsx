@@ -17,7 +17,10 @@ const Main: React.FC<MainProps> = (props) => {
     <main className={styles.main}>
       <div className={styles.mainContainer}>
         {props.dataLoaded ? (
-          <Carousel avgListGroup={props.avgListGroup} alterNavBarIndexZ={props.alterNavBarIndexZ}/>
+          <Carousel
+            avgListGroup={props.avgListGroup}
+            alterNavBarIndexZ={props.alterNavBarIndexZ}
+          />
         ) : (
           <div className={styles.spinnerContainer}>
             {
