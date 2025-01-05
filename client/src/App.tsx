@@ -14,6 +14,8 @@ const App: React.FC = () => {
   const [avgListGroup, setAvgListGroup] = useState<AvgObj[][]>([]);
   const [collapseDeptMenu, setCollapseDeptMenu] = useState<number>(1);
   const [dataLoaded, setDataLoaded] = useState<boolean>(false);
+  const [navbarbehind, setNavbarBehind] = useState<boolean>(false);
+
 
   // useEffect to check if server is connected and retrive the year range and dept lists first
   useEffect(() => {
@@ -87,15 +89,20 @@ const App: React.FC = () => {
     setCollapseDeptMenu((prevState) => prevState * -1);
   };
 
+  const alterNavBarIndexZ = () => {
+    setNavbarBehind((prevState) => !prevState);
+  }
+
   return (
     <div className={styles.appContainer} onClick={handleClick}>
       <Navbar
         deptList={deptList}
         yearList={yearList}
         collapseDeptMenu={collapseDeptMenu}
+        navbarbehind={navbarbehind}
         handleSubmitFromNavbar={handleSubmitFromNavbar}
       />
-      <Main avgListGroup={avgListGroup} dataLoaded={dataLoaded} />
+      <Main avgListGroup={avgListGroup} dataLoaded={dataLoaded} alterNavBarIndexZ={alterNavBarIndexZ}/>
     </div>
   );
 };

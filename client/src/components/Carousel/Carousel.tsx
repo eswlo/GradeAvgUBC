@@ -10,6 +10,7 @@ import Modal from "../Modal/Modal";
 
 interface CarouselProps {
   avgListGroup: AvgObj[][];
+  alterNavBarIndexZ: () => void;
 }
 
 const Carousel: React.FC<CarouselProps> = (props) => {
@@ -54,12 +55,14 @@ const Carousel: React.FC<CarouselProps> = (props) => {
 
   const handleTDClick = (td: AvgObj) => {
     console.log(`td: ${td}`);
+    props.alterNavBarIndexZ();
     setClickedTDAvgObj(td);
     setShowModal(true);
   };
 
   const closeModal = () => {
     console.log("close modal");
+    props.alterNavBarIndexZ();
     setClickedTDAvgObj(null);
     setShowModal(false);
   };

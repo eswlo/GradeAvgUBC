@@ -15,6 +15,7 @@ interface NavbarProps {
   deptList: string[];
   yearList: string[];
   collapseDeptMenu: number;
+  navbarbehind: boolean;
   handleSubmitFromNavbar: (arg: submitObj) => void;
 }
 
@@ -394,7 +395,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   };
 
   return (
-    <nav className={styles.navbar}>
+    <nav className={props.navbarbehind ? styles.navbarBehindSideContainer : styles.navbarBeforeSideContainer}>
       <div className={styles.textContainer}>
         <h1>Grade</h1>
         <h1>Avg</h1>
