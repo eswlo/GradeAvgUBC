@@ -1,15 +1,10 @@
 .navbar {
-    /* position: fixed; */
-    /* top: 0;
-    left: 0;
-    right: 0; */
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: linear-gradient(to right, #002145, #002145);
-    /* width: 100%; */
     height: 150px;
-    z-index: 1000; /* Ensure navbar stays on top */
+    z-index: 2;
 }
 
 .textContainer {

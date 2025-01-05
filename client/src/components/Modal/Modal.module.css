@@ -1,0 +1,45 @@
+
+.modalContainer {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    background: radial-gradient(
+        circle, /* Shape of the gradient */
+        rgba(0, 33, 69, 0.3), /* center */
+        rgba(0, 33, 69, 0.8)  /* corners */
+      );    
+    z-index: 500;
+}
+
+.submitBtn {
+    position: absolute; 
+    top: 30px; 
+    right: 30px;        
+    padding: 7px 7px;
+    cursor: pointer;
+}
+
+.chartContainer {
+    position: absolute;
+    background: radial-gradient(
+        circle, /* Shape of the gradient */
+        rgba(255, 255, 255, 1), /* center */
+        rgba(255, 255, 255, 1)  /* corners */
+    );  
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    width: 70%;
+    height: 70%;
+    padding: 20px 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: min-width 0.2s ease; 
+    z-index: 1000;
+}
+
+

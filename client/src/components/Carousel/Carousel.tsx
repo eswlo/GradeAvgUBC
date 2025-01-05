@@ -15,7 +15,7 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = (props) => {
   const [currentSlideNumber, setCurrentSlideNumber] = useState<number>(1);
-  const [clickedTD, setClickedTD] = useState<string>("");
+  const [clickedTDAvgObj, setClickedTDAvgObj] = useState<AvgObj | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
 
 
@@ -54,15 +54,15 @@ const Carousel: React.FC<CarouselProps> = (props) => {
     }
   };
 
-  const handleTDClick = (td: string) => {
+  const handleTDClick = (td: AvgObj) => {
     console.log(`td: ${td}`);
-    setClickedTD(td);
+    setClickedTDAvgObj(td);
     setShowModal(true);
   }
 
   const closeModal = () => {
     console.log("close modal");
-    setClickedTD("");
+    setClickedTDAvgObj(null);
     setShowModal(false);
 }
 
@@ -82,7 +82,7 @@ const Carousel: React.FC<CarouselProps> = (props) => {
         ))}
       </Slider>
       {props.avgListGroup.length > 0 && pagination()}
-      <Modal clickedTD={clickedTD} showModal={showModal} closeModal={closeModal}/>
+      {showModal && <Modal clickedTDAvgObj={clickedTDAvgObj} closeModal={closeModal}/>}
     </div>
   );
 };
