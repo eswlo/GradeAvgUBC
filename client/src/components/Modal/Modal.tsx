@@ -51,7 +51,7 @@ const Modal: React.FC<ModalProps> = (props) => {
           props.clickedTDAvgObj.id,
           props.clickedTDAvgObj.title,
         );
-        console.log(fetchedAvgHistByCourse);
+        // console.log(fetchedAvgHistByCourse);
         let i = fetchedAvgHistByCourse.length - 1;
         const newLabelListForOneCourseAvgs: string[] = [];
         const newDataListForOneCourseAvg: number[] = [];
@@ -72,8 +72,8 @@ const Modal: React.FC<ModalProps> = (props) => {
             count++;
           }
         }
-        console.log(newLabelListForOneCourseAvgs);
-        console.log(newDataListForOneCourseAvg);
+        // console.log(newLabelListForOneCourseAvgs);
+        // console.log(newDataListForOneCourseAvg);
         setClickedTDString(
           props.clickedTDAvgObj.dept.toUpperCase() +
             " " +
@@ -85,7 +85,7 @@ const Modal: React.FC<ModalProps> = (props) => {
         setDataListForOneCourseAvg(newDataListForOneCourseAvg);
       } catch (err) {
         const errStr = err as string;
-        console.log(`errStr: ${errStr}`);
+        // console.log(`errStr: ${errStr}`);
         swalNormalAlert(errStr);
       }
     }
@@ -130,7 +130,7 @@ const Modal: React.FC<ModalProps> = (props) => {
   };
 
   const makeLineChartForOneCourseAvgs = () => {
-    console.log("in makeLineChartForOneCourseAvgs");
+    // console.log("in makeLineChartForOneCourseAvgs");
     // console.log(labelListForOneCourseAvgs);
     return (
       <div className={styles.chartContainer}>

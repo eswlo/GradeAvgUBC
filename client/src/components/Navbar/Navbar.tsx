@@ -63,7 +63,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       {},
     ); // Convert the array of objects to a single object
     setDisplayedLabels(reducedDisplayedLabels);
-    console.log(reducedDisplayedLabels);
+    // console.log(reducedDisplayedLabels);
 
     const yearListLen = props.yearList.length;
     if (yearListLen !== 0) {
@@ -79,7 +79,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         newCheckedDeptList.push(key);
       }
     }
-    console.log(newCheckedDeptList);
+    // console.log(newCheckedDeptList);
     setCheckedDeptList(newCheckedDeptList);
   }, [checkboxes]);
 
@@ -173,7 +173,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         }
       } else {
         const userInput = value.toUpperCase();
-        console.log(userInput);
+        // console.log(userInput);
         props.deptList.forEach((dept) => {
           if (dept.indexOf(userInput) > -1) {
             // found, set to Shown
@@ -184,7 +184,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           }
         });
       }
-      console.log(updatedDisplayedLabels);
+      // console.log(updatedDisplayedLabels);
       setDisplayedLabels(updatedDisplayedLabels);
     }
   };

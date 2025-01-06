@@ -84,7 +84,7 @@ const App: React.FC = () => {
 
   const handleClick = () => {
     // console.log("clicked");
-    console.log(collapseDeptMenu);
+    // console.log(collapseDeptMenu);
     setCollapseDeptMenu((prevState) => prevState * -1);
   };
 

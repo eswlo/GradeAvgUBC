@@ -82,6 +82,6 @@
   .main {
     min-width: 350px;
     max-width: 480px;
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
   }
 }
