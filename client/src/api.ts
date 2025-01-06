@@ -1,15 +1,17 @@
 import { StatusCodes } from "http-status-codes";
 import { submitObj } from "./components/Navbar/Navbar";
 
+
+
 let URL;
 
-if (process.env.NODE_ENV === "development") {
-  URL = "http://localhost:3000";
+if (process.env.NODE_ENV === 'development') {
+  URL = 'http://localhost:3000';
 } else {
   URL = `https://gradeavgubcserver.onrender.com`;
 }
 
-console.log(`URL: ${URL}`);
+// console.log(`URL: ${URL}`);
 
 type DeptObj = {
   dept: string;
